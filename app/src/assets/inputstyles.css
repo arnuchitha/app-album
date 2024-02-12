@@ -1,0 +1,640 @@
+
+.inputClean .setpadding-ini{
+    padding: 30px 27px 6px 12px !important;
+}
+.inputClean .setpadding-img{
+    padding: 30px 27px 6px 50px !important;   
+}
+.inputClean .input {
+    position:relative;
+}
+.inputClean .select {
+    position:relative;
+}
+.inputClean .select:after {
+    /* content: '›';
+    font: 25px "Consolas", monospace;
+    color: #333;
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+    right: 11px;
+    bottom: 5px;
+    padding: 0 0 2px;
+
+    position: absolute;
+    pointer-events: none; */
+    content: '';
+    pointer-events: none;
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    right: 12px;
+    bottom: 15px;
+    position: absolute;
+    border: solid grey;
+    border-width: 0 1px 1px 0;
+    display: inline-block;
+    padding: 3.4px;
+}
+  
+.inputClean .select .labelInput {
+    position:absolute;
+    top:8px;
+    left:14px;
+    display:-webkit-box;
+    display:-ms-flexbox;
+    display:flex;
+    -webkit-box-align:center;
+    -ms-flex-align:center;
+    align-items:center
+}
+
+.inputClean .select .labelInput label {
+    color:#3c3c68;
+    white-space:nowrap;
+    font-size:14px;
+    margin-top: 2px;
+    margin-right:5px 
+    
+}
+
+.inputClean .select .asterisk {
+    font-size:12px;
+    color:#f1502f;
+    position:absolute;
+    top:6px;
+    right:6px;
+    -webkit-transform:scale(.7);
+    transform:scale(.7)
+}
+
+.inputClean .input .labelInput {
+    position:absolute;
+    top:8px;
+    left:14px;
+    display:-webkit-box;
+    display:-ms-flexbox;
+    display:flex;
+    -webkit-box-align:center;
+    -ms-flex-align:center;
+    align-items:center
+}
+
+.inputClean .input .labelInputAmount {
+    position:absolute;
+    top:8px;
+    right:2px;
+    display:-webkit-box;
+    display:-ms-flexbox;
+    display:flex;
+    -webkit-box-align:center;
+    -ms-flex-align:center;
+    align-items:center
+}
+.inputClean .input .labelInputAmount label {
+    color: #3c3c68;
+    white-space: nowrap;
+    font-size: 14px;
+    margin-top: 2px;
+    margin-right: 5px;
+}
+
+.inputClean .input .labelInput label {
+    color:var(--inactive-color);
+    white-space:nowrap;
+    font-size:14px;
+    margin-top: 2px;
+    margin-right:5px 
+    
+}
+
+.inputClean .input .asterisk {
+    font-size:12px;
+    color:#f1502f;
+    position:absolute;
+    top:6px;
+    right:6px;
+    -webkit-transform:scale(.7);
+    transform:scale(.7)
+}
+
+.inputClean .input .arrowlist {
+    font-size: 12px;
+    color:black;
+    position:absolute;
+    bottom:15px;
+    right:10px;
+    transform:rotate(0deg);
+    -webkit-transform: rotate(0deg); /* WebKit */
+    -moz-transform: rotate(0deg); /* Mozilla */
+    -o-transform: rotate(0deg); /* Opera */
+    -ms-transform: rotate(0deg); /* Internet Explorer */
+    -webkit-transition:all .5s ease!important;
+    transition:all .5s ease!important
+}
+
+.inputClean .input .showicon {
+    font-size: 15px;
+    color: black;
+    position: absolute;
+    bottom: 15px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.inputClean .input .showicon:hover {
+    color: #4285f4 !important;
+}
+
+.inputClean .input .dropdownselect {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    cursor: pointer;
+    padding-top: -2px;
+    padding-left: 6px;
+    border-left: 1px solid #cdd4e0bf;
+}
+
+.inputClean .input .dropdownselect:hover {
+    color: #4285f4 !important;
+}
+.inputClean .input .dropdowndate {
+    font-size: 15px;
+    color: var(--inactive-color);
+    position: absolute;
+    bottom: 15px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.inputClean .input .dropdowndate:hover {
+    color: #4285f4 !important;
+}
+
+.inputClean .logo  {
+    position: absolute;
+    z-index: 1;
+    bottom: 4;
+    left: 10;
+    padding: 2px;
+}
+
+/* .inputClean .logo img {
+    margin-left: 13px;
+    outline: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+} */
+.inputClean .select select::-ms-expand {
+    display: none;
+}
+
+.inputClean .select select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    color: var(--input-style-color);
+    padding:30px 14px 6px 12px;
+    outline:none;
+    width:100%;
+    border-radius:4px;
+    font-size:16px;
+    background:var(--input-bg-color);
+    border:1px solid #dadbe6;
+    line-height: 1.4em;
+    font-family: 'Kanit', sans-serif !important;
+}
+
+.inputClean .input textarea {
+    color: var(--input-style-color);
+    padding:30px 14px 6px 12px;
+    outline:none;
+    width:100%;
+    border-radius:4px;
+    font-size:16px;
+    background:var(--input-bg-color);
+    /* border:1px solid #dadbe6; */
+    line-height: 1.4em;
+    font-family: 'Kanit', sans-serif !important;
+}
+
+.inputClean .datetime-pi .p-calendar {
+    width: 100%;
+}
+
+.inputClean .input-pi .p-dropdown {
+    width: 100%;
+    padding-top: 18px;
+}
+.inputClean .select-input-pi .p-dropdown {
+    width: 100%;
+}
+
+.inputClean .select-pi .p-dropdown {
+    width: 100%;
+    padding-top: 18px;
+}
+
+.inputClean .select-pi .p-dropdown .p-inputtext  {
+    color: var(--input-style-color);
+}
+
+.inputClean .select-input-pi input {
+    padding-bottom: 5px !important;
+    border: none !important;
+    background: transparent !important;
+}
+
+.inputClean .input-pi input {
+    height: 48px !important;
+    padding-bottom: 5px !important;
+    border: none !important;
+}
+
+.inputClean .datetime-pi input {
+    padding-top: 30px  !important;
+    padding-bottom: 5px !important;
+}
+
+.inputClean .input input {
+    color: var(--input-style-color);
+    padding:30px 14px 6px 12px;
+    outline:none;
+    width:100%;
+    height:60px;
+    font-size:16px;
+    background:var(--input-bg-color);
+    border-radius: 0.5rem;
+    border: 1px solid transparent;
+    font-family: 'Kanit', sans-serif !important;
+    /* -webkit-transition:all .5s ease!important;
+    transition:all .5s ease!important */
+}
+
+.inputClean .input .span-data {
+    color: #3297ff;
+    padding:38px 14px 6px 12px;
+    outline:none;
+    width:100%;
+    height:60px;
+    border-radius:4px;
+    font-size:16px;
+    background:#ffffffc2;
+    border:1px solid #dadbe6;
+}
+
+/* ส่วนของ select */
+.inputClean .select select:hover {
+    border:1px solid #636384;
+    background:#ffffffc2;
+}
+
+.inputClean .select select:focus {
+    color: #3b3c66 !important;
+    border:1px solid #3297ff;
+    background:#ffffffc2;
+}
+
+.inputClean .select select:focus:hover {
+    border:1px solid #3297ff;
+}
+
+.inputClean .select select:focus ~ .labelInput label {
+    font-weight: 300 !important;
+    color: #4285f4 !important;
+    -webkit-transition:all .5s ease!important;
+    transition:all .5s ease!important;
+}
+
+/* ส่วนของ Text Area */
+.inputClean .input textarea:hover {
+    color: var(--input-style-color);
+    /* border:1px solid #636384; */
+    /*background:#ffffffc2; */
+}
+
+.inputClean .input textarea:focus {
+    color: var(--input-style-color);
+    /* color: #3b3c66 !important; */
+    /* border:1px solid #3297ff; */
+    /* background:#ffffffc2; */
+}
+
+.inputClean .input textarea:focus:hover {
+    /*color: var(--input-style-color);*/
+    /*color: #4285f4 !important; */
+}
+
+.inputClean .input textarea:focus:hover ~ .labelInput label {
+    /*color: var(--input-style-color);*/
+    color: #4285f4 !important;
+}
+
+.inputClean .input textarea:focus ~ .labelInput label {
+    font-weight: 300 !important;
+    color: #4285f4 !important;
+    -webkit-transition:all .5s ease!important;
+    transition:all .5s ease!important;
+}
+
+.inputClean .input textarea:focus ~ .arrowlist {
+    font-size: 12px;
+    transform:rotate(0deg);
+    -webkit-transform: rotate(180deg); /* WebKit */
+    -moz-transform: rotate(180deg); /* Mozilla */
+    -o-transform: rotate(180deg); /* Opera */
+    -ms-transform: rotate(180deg); /* Internet Explorer */
+}
+
+.inputClean .input textarea:focus ~ .logo {
+    display: none;
+}
+
+/* ส่วน Text input */
+.inputClean .input input:hover {
+    color: var(--theme-color) !important;
+    transition: var(--tran-06);
+    border: 1px solid var(--input-bd-hover);
+    background:var(--input-bg-hover);
+}
+.inputClean .input input:hover ~ .labelInput label {
+    color: var(--input-label-hover);
+}
+
+.inputClean .input input:focus {
+    color: var(--theme-color) !important;
+    border:1px solid var(--input-bd-hover);
+    background:var(--input-bg-hover);
+    box-shadow: none;
+}
+
+
+.inputClean .input input:focus ~ .labelInput label {
+    font-weight: 300 !important;
+    color: var(--input-label-hover);
+    -webkit-transition:all .5s ease!important;
+    transition:all .5s ease!important;
+}
+
+.inputClean .input input:focus ~ .arrowlist {
+    font-size: 12px;
+    transform:rotate(0deg);
+    -webkit-transform: rotate(180deg); /* WebKit */
+    -moz-transform: rotate(180deg); /* Mozilla */
+    -o-transform: rotate(180deg); /* Opera */
+    -ms-transform: rotate(180deg); /* Internet Explorer */
+}
+
+.inputClean .input input:focus ~ .logo {
+    display: none;
+}
+/* :not(:focus) */
+
+
+/* ส่วนของ Text Area */
+.inputClean .input textarea::-webkit-input-placeholder { color:#0000006b}
+.inputClean .input textarea::-moz-placeholder { color:#0000006b}
+.inputClean .input textarea::-ms-input-placeholder {color:#0000006b}
+.inputClean .input textarea::-ms-input-placeholder {color:#0000006b}
+.inputClean .input textarea::placeholder {color:#0000006b}
+.inputClean .input textarea:focus::-webkit-input-placeholder { color:#3b3c66 }
+.inputClean .input textarea:focus::-moz-placeholder { color:#3b3c66}
+.inputClean .input textarea:focus:-ms-input-placeholder {color:#3b3c66}
+.inputClean .input textarea:focus::-ms-input-placeholder {color:#3b3c66}
+.inputClean .input textarea:focus::placeholder {color:#3b3c66}
+.inputClean .input textarea:disabled {
+    background:#f8f9fd;
+    border:1px solid #f8f9fd;
+    color:#9d9eb1
+}
+
+/* ส่วนของ Text Area */
+.inputClean .select select::-webkit-input-placeholder { color:#0000006b}
+.inputClean .select select::-moz-placeholder { color:#0000006b}
+.inputClean .select select::-ms-input-placeholder {color:#0000006b}
+.inputClean .select select::-ms-input-placeholder {color:#0000006b}
+.inputClean .select select::placeholder {color:#0000006b}
+.inputClean .select select:focus::-webkit-input-placeholder { color:#3b3c66 }
+.inputClean .select select:focus::-moz-placeholder { color:#3b3c66}
+.inputClean .select select:focus:-ms-input-placeholder {color:#3b3c66}
+.inputClean .select select:focus::-ms-input-placeholder {color:#3b3c66}
+.inputClean .select select:focus::placeholder {color:#3b3c66}
+.inputClean .select select:disabled {
+    background:#f8f9fd;
+    border:1px solid #f8f9fd;
+    color:#9d9eb1
+}
+
+/* ส่วนของ Input Text */
+.inputClean .input input::-webkit-input-placeholder { color:var(--input-place-color)}
+.inputClean .input input::-moz-placeholder {color:var(--input-place-color)}
+.inputClean .input input::-ms-input-placeholder {color:var(--input-place-color)}
+.inputClean .input input::-ms-input-placeholder {color:var(--input-place-color)}
+.inputClean .input input::placeholder {color:var(--input-place-color)}
+
+.inputClean .input input:focus::-webkit-input-placeholder { color:var(--input-place-color) }
+.inputClean .input input:focus::-moz-placeholder { color:#3b3c66}
+.inputClean .input input:focus:-ms-input-placeholder {color:#3b3c66}
+.inputClean .input input:focus::-ms-input-placeholder {color:#3b3c66}
+.inputClean .input input:focus::placeholder {color:#3b3c66}
+.inputClean .input input[type=password] {font-size:20px}
+.inputClean .input input:disabled {
+    /* background:#f8f9fd;
+    border:1px solid #f8f9fd; */
+    color:#9d9eb1
+}
+
+.inputClean .input .maxdigit {
+    position:absolute;
+    top:30px;
+    right:18px;
+    color:#9d9eb1
+}
+.inputClean .input .labelShowPassword {
+    font-size:14px;
+    color:#3c3c68;
+    -webkit-transition:.5s;
+    transition:.5s;cursor:pointer
+}
+.inputClean .input .labelShowPassword:hover {
+    color:#3b3c66;
+    padding:0 5px
+}
+.inputClean .input .labelShowPassword:active {padding:0}
+.inputClean .input .labelMaxlength {
+    font-size:12px;
+    top:10px
+}
+
+.inputClean .select .alertMessage {
+    position:absolute;
+    background:#fff1ee;
+    display:-webkit-box;
+    display:-ms-flexbox;
+    display:flex;
+    -webkit-box-align:center;
+    -ms-flex-align:center;
+    align-items:center;
+    border-radius:4px;
+    padding:10px;
+    margin-top:3px;
+    min-width:100%;
+    z-index:99;
+    -webkit-box-shadow:0 2px 4px 0 rgba(0,0,0,.2);
+    box-shadow:0 2px 4px 0 rgba(0,0,0,.2)
+}
+.inputClean .select .alertMessage p,
+.inputClean .select .alertMessage i {color:#f1502f;font-size:14px}
+.inputClean .select .alertMessage i {position:unset;margin-right:6px}
+.inputClean .select .toggleToken {
+    cursor:pointer;
+    font-size:16px;
+    color:#3b3c66;
+    position:absolute;
+    right:0;
+    margin:12px 12px 0 0
+}
+
+.inputClean .input .alertMessage {
+    position:absolute;
+    background:#fff1ee;
+    display:-webkit-box;
+    display:-ms-flexbox;
+    display:flex;
+    -webkit-box-align:center;
+    -ms-flex-align:center;
+    align-items:center;
+    border-radius:4px;
+    padding:10px;
+    margin-top:3px;
+    min-width:100%;
+    z-index:99;
+    -webkit-box-shadow:0 2px 4px 0 rgba(0,0,0,.2);
+    box-shadow:0 2px 4px 0 rgba(0,0,0,.2)
+}
+.inputClean .input .alertMessage p,
+.inputClean .input .alertMessage i {color:#f1502f;font-size:14px}
+.inputClean .input .alertMessage i {position:unset;margin-right:6px}
+.inputClean .input .toggleToken {
+    cursor:pointer;
+    font-size:16px;
+    color:#3b3c66;
+    position:absolute;
+    right:0;
+    margin:12px 12px 0 0
+}
+
+/* ส่วนของ Select */
+.inputClean .hidelabel select {padding:0 15px;height:40px}
+.inputClean .textRight select {text-align:right}
+.inputClean .textCenter select {text-align:center}
+.inputClean .blue select {color:#3297ff;}
+.inputClean .blue select :focus {color:#3b3c66}
+.inputClean .red select {color:#f1502f}
+.inputClean .red select:focus {color:#f1502f}
+.inputClean .error select {border:#f1502f solid 1px!important;background:#fff1ee!important}
+.inputClean select ::-webkit-outer-spin-button,
+.inputClean select ::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+
+/* ส่วนของ Text Area */
+.inputClean .hidelabel textarea {padding:0 15px;height:40px}
+.inputClean .textRight textarea {text-align:right}
+.inputClean .textCenter textarea {text-align:center}
+.inputClean .blue textarea {color:#3297ff;}
+.inputClean .blue textarea :focus {color:#3b3c66}
+.inputClean .red textarea {color:#f1502f}
+.inputClean .red textarea:focus {color:#f1502f}
+.inputClean .error textarea {border:#f1502f solid 1px!important;background:#fff1ee!important}
+.inputClean textarea ::-webkit-outer-spin-button,
+.inputClean textarea ::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+
+
+/* ส่วนของ Text Input */
+.inputClean .hidelabel {margin-bottom:5px}
+.inputClean .hidelabel input {padding:0 15px;height:40px}
+.inputClean .textRight input {text-align:right}
+.inputClean .textCenter input {text-align:center}
+.inputClean .inputPassword input {padding-right:100px}
+.inputClean .blue input {color:#3297ff;}
+.inputClean .blue input :focus {color:#3b3c66}
+.inputClean .red input {color:#f1502f}
+.inputClean .red input:focus {color:#f1502f}
+.inputClean .error input {border:#f44336 solid 1px!important;background:var(--input-bg-color)}
+.inputClean input ::-webkit-outer-spin-button,
+.inputClean input ::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.inputClean input[type=number] {-moz-appearance:textfield}
+
+
+/* .inputClean input:not([type]):focus+label, 
+.inputClean input[type="text"]:not(.browser-default):focus:not([readonly])+label, 
+.inputClean input[type="password"]:not(.browser-default):focus:not([readonly])+label, 
+.inputClean input[type="email"]:not(.browser-default):focus:not([readonly])+label, 
+.inputClean input[type="url"]:not(.browser-default):focus:not([readonly])+label, 
+.inputClean input[type="time"]:not(.browser-default):focus:not([readonly])+label, 
+.inputClean input[type="date"]:not(.browser-default):focus:not([readonly])+label, 
+.inputClean input[type="datetime"]:not(.browser-default):focus:not([readonly])+label, 
+.inputClean input[type="datetime-local"]:not(.browser-default):focus:not([readonly])+label, 
+.inputClean input[type="tel"]:not(.browser-default):focus:not([readonly])+label, 
+.inputClean input[type="number"]:not(.browser-default):focus:not([readonly])+label, 
+.inputClean input[type="search"]:not(.browser-default):focus:not([readonly])+label, 
+.inputClean input[type="phone"]:not(.browser-default):focus:not([readonly])+label, 
+.inputClean input[type="search-md"]:focus:not([readonly])+label, 
+.inputClean textarea.md-textarea:focus:not([readonly])+label {
+    color: red;
+} */
+
+.noty_layout{
+    width: 500px !important;
+}
+
+.dropdown-menu{
+    width: -moz-calc(100% - 28px);
+    width: -webkit-calc(100% - 28px);
+    width: calc(100% - 28px);
+ }
+
+ .dropdown-menu > .active > a,
+ .dropdown-menu > .active > a:hover,
+ .dropdown-menu > .active > a:focus {
+     color: #3297ff;
+     text-decoration: none;
+     padding: 0.2em;
+     background-color: #e9ecef !important;
+     outline: 0;
+     display: block;
+ }
+     /* .dropdown-menu >li{
+       padding: 0.2em;
+     } */
+ .dropdown-menu>li>hr{
+     border-top: none !important;
+ }
+ 
+ .dropdown-menu >li> a{
+     font-size: 0.97em;
+     display: block; 
+     padding: 0.1em;
+     color: #6c757d;
+ }
+
+ /* modify balloon down */
+ [aria-label][data-balloon-pos][data-balloon-pos^="down"]:after {
+    margin-top: 5px;
+    padding: 10;
+}
+[aria-label][data-balloon-pos][data-balloon-pos^="down"]:before {
+    margin-top: -5;
+    width: 0;
+    height: 0;
+    border: 5px solid transparent;
+    border-bottom-color: var(--balloon-color);
+}
+
+.p-dropdown .p-dropdown-label {
+    color: var(--input-style-color);
+}

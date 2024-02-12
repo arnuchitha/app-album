@@ -1,0 +1,71 @@
+
+
+/* MINK STYLE */
+.mink-table-th{
+  color: #8392ab !important;
+  z-index: 1 !important;
+}
+.mink-table-outer {
+  overflow-y: auto;
+  height: 660px;
+}  
+.mink-table-outer {
+  width: 100%;
+  background: #f8f9fa;
+}
+.mink-table-outer th {
+  text-align: left;
+  top: 0;
+  position: sticky;
+  background-color: white;
+}
+.mink-table-outer thead th {
+  vertical-align: bottom;
+  border-bottom: 1px solid #dee2e6 !important;
+}
+.mink-table-outer .table-striped>tbody>tr:nth-of-type(odd) {
+  background-color: #3bb38c1a;
+}
+.mink-table-outer .table td{
+  border-bottom: 1px solid #dee2e6 !important;
+}  
+.mink-table-outer .table-hover>tbody>tr:hover {
+    border-left: 3px solid #4285f4 !important;
+    background-color: #4285f42e !important;
+    transition: all .1s;
+}
+
+
+/* MINIMAL STYLE */
+.minimal-table {
+  min-height: 250;
+  width: 100%;
+  background: #f8f9fa;
+}  
+
+.minimal-table-th{
+  color: #8392ab !important;
+  z-index: 1 !important;
+}
+
+.minimal-table th {
+  text-align: left;
+  top: 0;
+  position: sticky;
+  background-color: white;
+}
+.minimal-table thead th {
+  vertical-align: bottom;
+  border-bottom: 1px solid #dee2e6 !important;
+}
+.minimal-table .table-striped>tbody>tr:nth-of-type(odd) {
+  background-color: #3bb38c1a;
+}
+.minimal-table .table td{
+  border-bottom: 1px solid #dee2e6 !important;
+}  
+.minimal-table .table-hover>tbody>tr:hover {
+    border-left: 3px solid #4285f4 !important;
+    background-color: #f8f9fa !important;
+    transition: all .1s;
+}

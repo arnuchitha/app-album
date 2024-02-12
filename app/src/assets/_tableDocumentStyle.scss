@@ -1,0 +1,218 @@
+.table-document{
+    .box-title-sub {
+        h4 {
+          color: var(--inactive-color);
+          margin: 0;
+          .title-icon {  
+            padding-right: 5px;
+            color: var(--ico-color-tab-active);
+          }
+        }
+    }
+    .box-sm-infomsg {
+        text-align: left;
+        min-width: 10rem;
+        .content-msg {
+          font-weight: 500;
+        }
+      }
+    .table-class {
+        transition: 0.3s ease;
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 2px;
+        thead {
+            tr {
+                height: 50px;
+                th {
+                    .header-right {
+                        display: flex;
+                        display: -webkit-box;
+                        display: -ms-flexbox;
+                        -webkit-box-pack: end;
+                        -ms-flex-pack: center;
+                        justify-content: end;
+                        -webkit-box-align: end;
+                        -ms-flex-align: center;
+                        padding-right: 0.5rem;
+                    }
+                    .header-th-div {
+                        color: var(--inactive-color);
+                        display: -webkit-box;
+                        display: -ms-flexbox;
+                        display: flex;
+                        -webkit-box-align: center;
+                        -ms-flex-align: center;
+                        align-items: center;
+                        p {
+                            font-size: 14px;
+                        }
+                        .tooltip {
+                            position: relative;
+                            .icon-tooltip {
+                                color: var(--ico-color-tooltip);
+                                display: -webkit-box;
+                                display: -ms-flexbox;
+                                display: flex;
+                                -webkit-box-align: center;
+                                -ms-flex-align: center;
+                                align-items: center;
+                                padding-left: 5px;
+                                -webkit-transition: color 0.5s ease-out;
+                                -moz-transition: color 0.5s ease-out;
+                                -o-transition: color 0.5s ease-out;
+                                transition: color 0.5s ease-out;
+                                i {
+                                    cursor: pointer;
+                                    font-size: 14px;
+                                }
+                            }
+                            .icon-tooltip:hover {
+                                color: var(--ico-color-title);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        tbody {
+            tr{
+                .mute-td {
+                    background: transparent;
+                }
+                td:first-child {
+                    height: 100%;
+                    border-right: 0;
+                    border-top-left-radius: 10px;
+                    border-bottom-left-radius: 10px;
+                    padding: unset;
+                    border-left: 1px solid var(--border-color);
+                    border-top: 1px solid var(--border-color);   
+                    border-bottom: 1px solid var(--border-color);    
+                }
+                td:last-child {
+                    height: 100%;
+                    border-right: 0;
+                    border-top-right-radius: 10px;
+                    border-bottom-right-radius: 10px;
+                    padding: unset;
+                    border-left: 1px solid var(--border-color);
+                    border-top: 1px solid var(--border-color);   
+                    border-bottom: 1px solid var(--border-color);
+                    border-right: 1px solid var(--border-color);
+                    width: 30px;
+                }
+                td{
+                    text-align: center;
+                    border-left: 1px solid var(--border-color);
+                    border-top: 1px solid var(--border-color);
+                    border-bottom: 1px solid var(--border-color);
+                    background: var(--table-bg);
+                    color:var(--theme-color);
+
+                    .block-befor-vat {
+                        text-align: right;
+                        padding-right: 0.5rem;
+                    }
+                    .block-delete {
+                        margin: 0;
+                        padding: 0;
+                        padding-top: 11px;
+                        padding-bottom: 12px;
+                        cursor: pointer;
+                    }
+                    .inp-number {
+                        text-align: right;
+                    }
+                    .input-center {
+                        text-align: center;
+                    }
+                    input {
+                        font-size: 16px;
+                        font-family: "Kanit", sans-serif !important;
+                        border-radius: 0;
+                        padding: 5px 10px;
+                        outline: none;
+                        width: 100%;
+                        transition: all 0.5s ease !important;
+                        height: 48px;
+                        background-color:transparent;
+                        color: var(--theme-color);
+                        border: none;
+                    }
+                    .box-flex-end {
+                        position: relative;
+                        display: -webkit-box;
+                        display: -ms-flexbox;
+                        display: flex;
+                        -webkit-box-pack: end;
+                        -ms-flex-pack: center;
+                        justify-content: end;
+                        -webkit-box-align: end;
+                        -ms-flex-align: center;
+                        align-items: center;
+                        .p-description {
+                            height: 100%;
+                            background-color: transparent;
+                            color: #03a9f4;
+                            border: none;
+                        }
+                        .btn-insert-spec {
+                            width: 30px;
+                            margin-top: -10px;
+                            cursor: pointer;
+                            padding: 0;
+                            margin: 0;
+                        }
+                    }
+                    .text-right {
+                        text-align: right;
+                    }
+                    .p-dropdown {
+                        background-color: transparent !important;
+                        border: 1px solid transparent !important;
+                    }
+                    .p-inputtext  {
+                        padding: 0.25rem 0.75rem !important;
+                    }
+                    .inputDiscount {
+                        //display: none;
+                        position: relative;
+                        display: flex;
+                        align-items: center;
+                        .discountOption {
+                            top: 50px;
+                            padding: 0.5rem;
+                            background: var(--bg-dialog);
+                            border-radius: 0;
+                            box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
+                            background-color: var(--bg-dialog);
+                            color: var(--theme-color) !important;
+                            backdrop-filter: blur(40px) saturate(180%) !important;
+                            border: 0 none !important;
+                            border-radius: 6px !important;
+                            box-shadow: 0 25px 20px -21px rgb(0 0 0 / 57%);
+                            font-size: 14px;
+                            position: absolute;
+                            -webkit-box-shadow:0 25px 20px -21px rgb(0 0 0 / 57%);
+                            z-index: 2;
+                            width: 120%;
+                            text-align: left;
+                            p {
+                                font-weight: bold;
+                                margin: 5px 0;
+                            }
+                            .field-radiobutton {
+                                padding-top: 5px;
+                                padding-bottom: 5px;
+                          }
+                          label {
+                            margin-left: 5px;
+                          }
+                        }
+                      }
+                }
+            }
+        }
+    }
+}
