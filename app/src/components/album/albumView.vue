@@ -1,6 +1,8 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref, inject, h, watch, toRaw } from "vue";
+import { useDialog } from "primevue/usedialog";
+import albumHead from "./albumHead.vue";
 
 interface Photo {
   id: number;
@@ -34,6 +36,8 @@ const albums = ref<Album[]>([
   }
 ]);
 
+const modalDialog = useDialog();
+
 const actions = () => {
   const ac = {
     onInit: async () => {
@@ -54,6 +58,47 @@ const actions = () => {
       if (index !== -1) {
         albums.value.splice(index, 1);
       }
+    },
+    onCreateAlbum: () =>{
+      console.log("IN BUTTON");
+
+      modalDialog.open( albumHead, {
+        props: {
+          closeOnEscape: false,
+          rtl: false,
+          modal: true,
+          style: {
+            width: "1000px",
+            margin: "0px",
+            position: "fixed",
+          },
+          breakpoints: {
+            "960px": "75vw",
+            "640px": "90vw",
+          },
+        },
+        templates: {
+          header: () => {
+            return [
+              h("div", { class: "header-dialog" }, [h("span", "เพิ่มเอกสาร")]),
+            ];
+          },
+        },
+        onClose: async (options) => {
+          if (options?.data == true) {
+              console.log("TEST CLOSE");
+          }
+          // if (options?.data) {
+          //   if(isManager.value){
+          //     await myStore.fetchTemplatesListByAll();
+          //     collectionSet.value = myStore.listTemplates;
+          //   }else{
+          //     await myStore.fetchTemplatesListByDepartmentID(userLogin.departmentId);
+          //     collectionSet.value = myStore.listTemplates;
+          //   }
+          // }
+        },
+      });
     }
   };
   return ac;
@@ -68,7 +113,11 @@ onMounted(async () => {
     <div>
         <header>
             <h1>My Photo Album</h1>
+            <div>
+              <Button @click="actions().onCreateAlbum()">สร้างอัลบั้ม</Button>
+            </div>
         </header>
+        
         <main>
         <div v-if="albums.length === 0">
             <p>No albums found. Please add some.</p>
