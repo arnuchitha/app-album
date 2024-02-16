@@ -87,20 +87,16 @@ nav a:first-of-type {
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import LoginVue from './components/Login.vue';
-import AlbumTest from './components/album/album.vue'
+import AlbumView from './components/album/albumView.vue'
 
 </script>
 
 <template>
   <div id="app">
-    <!-- <LoginVue/> -->
-    <!-- <LoginVue/> -->
-    <AlbumTest/>
-  </div>
-  <div class="layout">
-    <Logo />
-
-    <RouterView />
+    <div class="layout">
+      <AlbumView/>
+      <!-- <RouterView /> -->
+    </div>
   </div>
 </template>
 
