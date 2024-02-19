@@ -22,7 +22,6 @@ const isSubmit = ref(false);
 const actions = () => {
   const ac = {
     onInit: async () => {
-        console.log("dialog")
       if (dialogRef.value.data) {
         command.value = "detail";
       }
@@ -66,26 +65,16 @@ const events = () => {
 };
 
 
-const disabled = ref(true);
-setTimeout(() => {
-  if (command.value == "edit" || command.value == "create") {
-    disabled.value = false;
-  }
-  return disabled.value;
-}, 5000);
-
-const switchStatus = (command: string) => {
-  switch (command) {
-    case "create":
-      return "pointer-events-all";
-    case "detail":
-      return "pointer-events-none";
-    default:
-      return "pointer-events-all";
-  }
-};
+// const disabled = ref(true);
+// setTimeout(() => {
+//   if (command.value == "edit" || command.value == "create") {
+//     disabled.value = false;
+//   }
+//   return disabled.value;
+// }, 5000);
 
 onMounted(async () => {
+  console.log(isReady.value)
   await actions()
     .onInit()
     .catch(() => {
@@ -95,34 +84,8 @@ onMounted(async () => {
 
 </script>
 <template>
-  <div v-if="isReady == 'WARN'" class="animate__animated animate__fadeIn wait-wave">
-    <main class="animated zoomIn">
-      <div class="border-eff mt-3"></div>
-      <div class="container-fluid">
-        <div class="row row-style">
-          <div class="col-3">
-            <label>ประเภทหมวด</label>
-          </div>
-          <div class="col">
-            <Skeleton class="mb-2" height="3rem"></Skeleton>
-          </div>
-        </div>
-        <div class="row row-style">
-          <div class="col-3">
-            <div class="field-radiobutton">
-              <label>ชื่อหมวดอัลบั้ม</label>
-            </div>
-          </div>
-          <div class="col">
-            <Skeleton class="mb-2" height="3rem"></Skeleton>
-          </div>
-        </div>
-      </div>
-      <div class="border-eff"></div>
-    </main>
-  </div>
   <main v-if="isReady == 'READY'" class="animate__animated animate__fadeIn wait-wave">
-    <div class="row" v-if="command == 'edit' || command == 'create'">
+    <div class="row">
       <div class="col-4">
       </div>
       <div class="col-7">
@@ -132,6 +95,15 @@ onMounted(async () => {
           <div class="col pl-10">
             <div class="inputClean">
               <div class="input select-pi">
+                <!-- <Dropdown class="cursor-pointer" v-dropdownenter :options="departmentList" optionValue="departmentId"
+                  optionLabel="nameLocal" v-model="cModel.masterTemplate.departmentId">
+                  <template #option="slotProps">
+                    <div class="drop-down-basic-item">
+                      <i class="fa-solid fa-file"></i>
+                      <div>{{ slotProps.option.nameLocal }}</div>
+                    </div>
+                  </template>
+                </Dropdown> -->
                 <div class="labelInput">
                   <label> ประเภทหมวด </label>
                 </div>
@@ -142,24 +114,8 @@ onMounted(async () => {
       </div>
       <div class="col-1"></div>
     </div>
-    <div class="row">
-      <div class="col-4">
-      </div>
-      <div class="col-7">
-        <div class="row" style="margin-top: -60px !important">
-          <div class="col pr-10">
-          </div>
-          <div class="col pl-10">
-            <div class="box-data">
-              <div class="label"><label class="label-bold">แผนก</label></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-1"></div>
-    </div>
     <div class="border-eff mt-3"></div>
-    <div class="container-fluid" v-if="command == 'create'">
+    <div class="container-fluid">
       <div class="app-card-template">
         <div class="row row-style">
           <div class="col-3 table-document">
@@ -182,16 +138,26 @@ onMounted(async () => {
               </div>
             </div>
           </div>
-          <!-- <div class="col pl-10">
+          <div class="col pl-10">
             <div class="inputClean">
               <div class="input">
                 <input type="text" autocomplete="off" />
                 <div class="labelInput">
-                  <label> คำอธิบาย </label>
+                  <label> ประเทศ </label>
                 </div>
               </div>
             </div>
-          </div> -->
+          </div>
+          <div class="col pl-10">
+            <div class="inputClean">
+              <div class="input">
+                <input type="text" autocomplete="off" />
+                <div class="labelInput">
+                  <label> เมือง </label>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -201,8 +167,8 @@ onMounted(async () => {
         <div class="col">
         </div>
         <div class="col-auto pr-10 pl-10">
-          <Button label="เพิ่มหมวดอัลบั้ม" v-if="command == 'create'" class="w-180 p-button-sm p-button-rounded"
-            @click="events().checkData()" icon="fa-sharp fa-solid fa-circle-check" :disabled="isSubmit" />
+          <Button label="เพิ่มหมวดอัลบั้ม" class="w-180 p-button-sm p-button-rounded"
+            @click="events().checkData()" icon="fa-sharp fa-solid fa-circle-check" />
         </div>
       </div>
     </div>
@@ -1012,4 +978,5 @@ onMounted(async () => {
   h4 {
     margin: 0;
   }
-}</style>
+}
+</style>

@@ -86,16 +86,19 @@ nav a:first-of-type {
 
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import { onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
 import LoginVue from './components/Login.vue';
-import AlbumView from './components/album/albumView.vue'
+
+const router = useRouter();
 
 </script>
 
 <template>
   <div id="app">
     <div class="layout">
-      <AlbumView/>
-      <!-- <RouterView /> -->
+      <RouterView />
+      <DynamicDialog />
     </div>
   </div>
 </template>

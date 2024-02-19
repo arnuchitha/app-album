@@ -1,8 +1,9 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref, inject, h, watch, toRaw } from "vue";
+import { useRouter } from "vue-router";
 import { useDialog } from "primevue/usedialog";
-import albumHead from "./albumHead.vue";
+import albumHead from "@/components/album/albumHead.vue";
 
 interface Photo {
   id: number;
@@ -36,12 +37,15 @@ const albums = ref<Album[]>([
   }
 ]);
 
+const router = useRouter();
 const modalDialog = useDialog();
+const isReady = ref("WARN");
 
 const actions = () => {
   const ac = {
     onInit: async () => {
         // actions().loginViewShow();
+        isReady.value = "READY";
     },
     // เพิ่มอัลบั้มภาพใหม่
     addAlbum: (name: string, photos: Photo[]) => {
@@ -60,10 +64,9 @@ const actions = () => {
       }
     },
     onCreateAlbum: () =>{
-      console.log("IN BUTTON");
       modalDialog.open( albumHead, {
         props: {
-          closeOnEscape: false,
+          closeOnEscape: true,
           rtl: false,
           modal: true,
           style: {
@@ -79,7 +82,7 @@ const actions = () => {
         templates: {
           header: () => {
             return [
-              h("div", { class: "header-dialog" }, [h("span", "เพิ่มเอกสาร")]),
+              h("div", { class: "header-dialog" }, [h("span", "เพิ่มหมวดอัลบั้ม")]),
             ];
           },
         },
@@ -104,8 +107,7 @@ const actions = () => {
 };
 
 onMounted(async () => {
-
-  // await actions().onInit();
+  await actions().onInit();
 });
   </script>
 <template>

@@ -234,7 +234,9 @@
 .inputClean .select-input-pi .p-dropdown {
     width: 100%;
 }
-
+.inputClean .select-input-pi .p-autocomplete {
+    width: 100%;
+}
 .inputClean .select-pi .p-dropdown {
     width: 100%;
     padding-top: 18px;
@@ -444,8 +446,8 @@
 .inputClean .input input:focus::placeholder {color:#3b3c66}
 .inputClean .input input[type=password] {font-size:20px}
 .inputClean .input input:disabled {
-    /* background:#f8f9fd;
-    border:1px solid #f8f9fd; */
+    background:#f8f9fd;
+    border:1px solid #f8f9fd;
     color:#9d9eb1
 }
 

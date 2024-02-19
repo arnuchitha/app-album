@@ -98,9 +98,8 @@
                     padding: unset;
                     border-left: 1px solid var(--border-color);
                     border-top: 1px solid var(--border-color);   
-                    border-bottom: 1px solid var(--border-color);
-                    border-right: 1px solid var(--border-color);
-                    width: 30px;
+                    border-bottom: 1px solid var(--border-color);   
+                    width: 30px; 
                 }
                 td{
                     text-align: center;
@@ -137,8 +136,10 @@
                         transition: all 0.5s ease !important;
                         height: 48px;
                         background-color:transparent;
-                        color: var(--theme-color);
+                        color: var(--theme-color) !important;
                         border: none;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
                     }
                     .box-flex-end {
                         position: relative;
