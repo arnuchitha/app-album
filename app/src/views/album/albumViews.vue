@@ -88,7 +88,7 @@ const actions = () => {
         },
         onClose: async (options) => {
           if (options?.data == true) {
-              console.log("TEST CLOSE");
+              console.log("Complete");
           }
           // if (options?.data) {
           //   if(isManager.value){

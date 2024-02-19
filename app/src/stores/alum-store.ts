@@ -10,7 +10,7 @@ interface iState {
   privilegeId: Number;
   departmentID: Number;
 }
-export const useOffice = defineStore("useOffice", {
+export const useAlbum = defineStore("useAlbum", {
   state: (): iState => ({
     privilegeId: 0,
     userID: 0,
@@ -19,6 +19,14 @@ export const useOffice = defineStore("useOffice", {
   getters: {
   },
   actions: {
-    
+    async createFolder (albumName: String, countryName: String, cityName: String ) {
+      const data = {
+        albumName: albumName,
+        countryName: countryName,
+        cityName: cityName,
+      };
+      await apis.post("/albumview/createFolder").data(data).finish();
+      return true;
+    }
   },
 });
