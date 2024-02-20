@@ -2,19 +2,22 @@ import { defineStore } from "pinia";
 import apis from "@/core/album-apis";
 import moment from "moment";
 import "moment/dist/locale/th";
+import type iAlbumProject from "@/interfaces/album-project";
+import type iCountryList from "@/interfaces/countryList";
+import type iCityList from "@/interfaces/cityList";
 
 moment.locale("th");
 
 interface iState {
-  userID: Number;
-  privilegeId: Number;
-  departmentID: Number;
+  albumProject: iAlbumProject[];
+  countryList: iCountryList[];
+  cityList: iCityList[];
 }
 export const useAlbum = defineStore("useAlbum", {
   state: (): iState => ({
-    privilegeId: 0,
-    userID: 0,
-    departmentID: 0,
+    albumProject : [],
+    countryList: [],
+    cityList: [],
   }),
   getters: {
   },
@@ -27,6 +30,32 @@ export const useAlbum = defineStore("useAlbum", {
       };
       await apis.post("/albumview/createFolder").data(data).finish();
       return true;
-    }
+    },
+    async getFolderAlbum (countryName: String, cityName: String ) {
+      this.albumProject = await apis.get("/albumview/getFolderAlbum")
+        .params({ 
+          countryNameValue: countryName, 
+          cityNameValue: cityName 
+        })
+        .finish()
+        .then((res) => {
+          return res.data;
+        });
+    },
+    async getCountryList () {
+      this.countryList = await apis.get("/albumview/getCountryList")
+        .finish()
+        .then((res) => {
+          return res.data;
+        });
+    },
+    // async getCityList () {
+    //   this.cityList = await apis.get("/albumview/getCityList")
+    //     .finish()
+    //     .then((res) => {
+    //       return res.data;
+    //     });
+    // },
+
   },
 });

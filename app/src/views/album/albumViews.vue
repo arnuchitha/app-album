@@ -3,11 +3,22 @@
 import { computed, onMounted, reactive, ref, inject, h, watch, toRaw } from "vue";
 import { useRouter } from "vue-router";
 import { useDialog } from "primevue/usedialog";
+import { useAlbum } from "@/stores/alum-store";
 import albumHead from "@/components/album/albumHead.vue";
 
 interface Photo {
   id: number;
   url: string;
+}
+
+interface setSearch {
+  countryName: string;
+  cityName: string;
+}
+
+interface setSearchShow {
+  CO: string;
+  CI: string;
 }
 
 interface Album {
@@ -40,12 +51,30 @@ const albums = ref<Album[]>([
 const router = useRouter();
 const modalDialog = useDialog();
 const isReady = ref("WARN");
+const myStore = useAlbum();
+const cModel = ref(myStore.albumProject);
+const countryValue = ref("");
+const cityValue = ref ("");
+const keySearch = ref("");
+const countryList = ref(myStore.countryList);
+
+const modelSearch: setSearch = reactive({
+  countryName: "",
+  cityName: "",
+});
 
 const actions = () => {
   const ac = {
     onInit: async () => {
-        // actions().loginViewShow();
+        await myStore.getCountryList();
+        countryList.value = myStore.countryList;
+        // await ac.getDataView();
+
         isReady.value = "READY";
+    },
+    getDataView: async () => {
+        await myStore.getFolderAlbum(countryValue.value, cityValue.value);
+        cModel.value = myStore.albumProject;
     },
     // เพิ่มอัลบั้มภาพใหม่
     addAlbum: (name: string, photos: Photo[]) => {
@@ -106,19 +135,139 @@ const actions = () => {
   return ac;
 };
 
+watch(modelSearch, async () => {
+  countryValue.value = modelSearch.countryName;
+  cityValue.value = modelSearch.cityName;
+    // await actions().getDataView();
+    // events().showData();
+});
+
+const events =() => {
+    const ev = {
+      setSearch: () => {
+        var getURL = {};
+        if (countryValue.value) {
+          getURL = Object.assign({}, getURL, { CO: countryValue.value });
+        }
+        if (cityValue.value) {
+          getURL = Object.assign({}, getURL, { CI: cityValue.value });
+        }
+
+        router.push({
+          path: "/album",
+          query: getURL,
+        });
+      },
+    };
+  return ev;
+}
+
 onMounted(async () => {
+  const getValue = (router.currentRoute.value.query as unknown) as setSearchShow;
+  console.log(getValue)
+  if (Object.keys(getValue).length) {
+    modelSearch.countryName = String(getValue.CO);
+    modelSearch.cityName = String(getValue.CI);
+    await myStore.getFolderAlbum(getValue.CO, getValue.CI);
+    cModel.value = myStore.albumProject;
+    console.log(cModel.value);
+  }
   await actions().onInit();
 });
   </script>
 <template>
     <div>
-        <header>
+      <header>
             <h1>My Photo Album</h1>
-            <div>
-              <Button @click="actions().onCreateAlbum()">สร้างอัลบั้ม</Button>
-            </div>
         </header>
-        
+      <div class="document-search">
+        <div class="row">
+          <div class="col-2 w-country-search">
+            <div class="box-input-search-dropdown">
+              <div class="inputClean">
+                <div class="input input-pi">
+                  <Dropdown
+                    v-model="modelSearch.countryName"
+                    optionLabel="countryName"
+                    optionValue="countryName"
+                    :options="countryList"
+                    placeholder="เลือกประเทศ"
+                    :filter="true"
+                    class="p-dropdown-country"
+                  >
+                    <template #value="countryList">
+                      <div v-if="countryList.value">
+                        <div>{{ countryList.value }}</div>
+                      </div>
+                      <span v-else>
+                        {{ countryList.placeholder }}
+                      </span>
+                    </template>
+                    <template #option="countryList">
+                      <div class="template-country">
+                        <div class="template-country-content">
+                          {{ countryList.option.countryName }}
+                        </div>
+                      </div>
+                    </template>
+                  </Dropdown>
+                  <div class="labelInput">
+                    <label><i class="pi pi-globe"></i> ประเทศ </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-4 w-input-search">
+            <div class="inputClean">
+              <div class="input">
+                <input
+                  v-model="modelSearch.cityName"
+                  type="text"
+                  placeholder="ชื่อเมือง"
+                  autocomplete="off"
+                />
+                <div class="labelInput">
+                  <label><i class="fa-solid fa-magnifying-glass"></i> ค้นหา </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-4 w-input-search">
+            <div class="inputClean">
+              <div class="input">
+                <input
+                  v-model="keySearch"
+                  type="text"
+                  placeholder="ชื่อหมวด"
+                  autocomplete="off"
+                />
+                <div class="labelInput">
+                  <label><i class="fa-solid fa-magnifying-glass"></i> ค้นหา </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-auto pt-2">
+            <div class="document-search-accept">
+              <Button
+                label="Search"
+                icon="pi pi-search"
+                class="bg-search p-button-sm p-button-rounded w-100"
+                @click="events().setSearch"
+              />
+            </div>
+          </div>
+          <div class="w-btn-clear-search">
+            <p class="text-blue clear-all cursor-pointer">
+              Clear all
+            </p>
+          </div>
+          <div class="col w-btn-search">
+            <Button @click="actions().onCreateAlbum()">สร้างอัลบั้ม</Button>
+          </div>
+        </div>
+      </div>
         <main>
         <div v-if="albums.length === 0">
             <p>No albums found. Please add some.</p>
@@ -147,5 +296,59 @@ onMounted(async () => {
   max-width: 200px;
   max-height: 200px;
 }
-  </style>
+.document-search {
+  display: flex;
+  justify-content: flex-start;
+  padding-bottom: 1rem !important;
+  padding-top: 0.75rem !important;
+  .w-country-search {
+    width: 250px;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+  .w-input-search {
+    width: 260px;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+  .w-input-search-m {
+    width: 615px;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+  .w-radio-search {
+    width: 265px;
+    display: flex;
+    align-items: center;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+  .w-dropdown-search {
+    width: 180px;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+  .w-btn-clear-search {
+    width: 90px;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    margin-top: 2px;
+  }
+  .w-btn-search {
+    width: 160px;
+    padding-top: 5px;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+}
+div > button.bg-search {
+  background-color: deepskyblue;
+  border: 1px solid deepskyblue;
+}
+
+div > button.bg-search:hover {
+  background-color: #3bb1f6 !important;
+  border: 1px solid #3bb1f6 !important;
+}
+</style>
   

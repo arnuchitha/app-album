@@ -76,7 +76,6 @@ const events = () => {
 // }, 5000);
 
 onMounted(async () => {
-  console.log(isReady.value)
   await actions()
     .onInit()
     .catch(() => {
