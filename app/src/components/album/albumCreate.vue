@@ -3,7 +3,7 @@ import { onMounted, ref, inject, h, computed, watch } from "vue";
 import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 import { useDialog } from "primevue/usedialog";
-import { useAlbum } from "@/stores/alum-store";
+import { useAlbum } from "@/stores/album-store";
 
 interface iCateSelected {
   pcCode: string;
@@ -168,7 +168,7 @@ onMounted(async () => {
         <div class="col">
         </div>
         <div class="col-auto pr-10 pl-10">
-          <Button label="เพิ่มหมวดอัลบั้ม" class="w-180 p-button-sm p-button-rounded"
+          <Button label="เพิ่มอัลบั้ม" class="w-180 p-button-sm p-button-rounded"
             @click="events().checkData()" icon="fa-sharp fa-solid fa-circle-check" />
         </div>
       </div>
@@ -380,3 +380,4 @@ onMounted(async () => {
   }
 }
 </style>
+@/stores/album-store

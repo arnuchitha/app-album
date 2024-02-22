@@ -4,7 +4,7 @@ import { computed, onMounted, reactive, ref, inject, h, watch, toRaw } from "vue
 import { useRouter } from "vue-router";
 import { useDialog } from "primevue/usedialog";
 import { useAlbum } from "@/stores/album-store";
-import albumCreate from "@/components/album/albumCreate.vue";
+import albumSetCreate from "@/components/albumSet/albumSetCreate.vue";
 import type iAlbumProject from "@/interfaces/album-project";
 
 interface Photo {
@@ -54,15 +54,11 @@ const modalDialog = useDialog();
 const isReady = ref("WARN");
 const myStore = useAlbum();
 const cModel = ref([] as iAlbumProject []);
+const albumValue = ref("");
 const countryValue = ref("");
 const cityValue = ref ("");
 const keySearch = ref("");
 const countryList = ref(myStore.countryList);
-
-const modelSearch: setSearch = reactive({
-  countryName: "",
-  cityName: "",
-});
 
 const actions = () => {
   const ac = {
@@ -75,8 +71,6 @@ const actions = () => {
         }, 1000);
     },
     getDataView: async () => {
-        await myStore.getFolderAlbum(countryValue.value, cityValue.value);
-        cModel.value = myStore.albumProject;
     },
     // เพิ่มอัลบั้มภาพใหม่
     addAlbum: (name: string, photos: Photo[]) => {
@@ -95,7 +89,7 @@ const actions = () => {
       }
     },
     onCreateAlbum: () =>{
-      modalDialog.open( albumCreate, {
+      modalDialog.open( albumSetCreate, {
         props: {
           closeOnEscape: true,
           rtl: false,
@@ -113,7 +107,7 @@ const actions = () => {
         templates: {
           header: () => {
             return [
-              h("div", { class: "header-dialog" }, [h("span", "เพิ่มหมวดอัลบั้ม")]),
+              h("div", { class: "header-dialog" }, [h("span", "เพิ่มอัลบั้ม")]),
             ];
           },
         },
@@ -137,13 +131,6 @@ const actions = () => {
   return ac;
 };
 
-watch(modelSearch, async () => {
-  countryValue.value = modelSearch.countryName;
-  cityValue.value = modelSearch.cityName;
-    // await actions().getDataView();
-    // events().showData();
-});
-
 const events =() => {
     const ev = {
       setSearch: () => {
@@ -162,13 +149,7 @@ const events =() => {
       clearSearch: () => {
         console.log("IN CLEAR");
         router.push({
-          path: "/album",
-        });
-      },
-      onViewSetAlbum: (albumName: string, countryName: string, cityName: string) => {
-        router.push({
-          path: "/album/albumset",
-          query: { albumName: albumName, countryName: countryName, cityName: cityName },
+          path: "/album/albumSet",
         });
       },
     };
@@ -176,70 +157,59 @@ const events =() => {
 }
 
 onMounted(async () => {
-  const getValue = (router.currentRoute.value.query as unknown) as setSearchShow;
-  if (Object.keys(getValue).length) {
-    modelSearch.countryName = String(getValue.CO);
-    modelSearch.cityName = String(getValue.CI);
-    await myStore.getFolderAlbum(getValue.CO, getValue.CI);
-    cModel.value = myStore.albumProject;
-  }
+    albumValue.value = String(router.currentRoute.value.query.albumName);
+    countryValue.value = String(router.currentRoute.value.query.countryName);
+    cityValue.value = String(router.currentRoute.value.query.cityName);
+    console.log(albumValue.value, countryValue.value, cityValue.value);
+
+//   const getValue = (router.currentRoute.value.query as unknown) as setSearchShow;
+//     console.log(getValue)
+//   if (Object.keys(getValue).length) {
+//     modelSearch.countryName = String(getValue.CO);
+//     modelSearch.cityName = String(getValue.CI);
+//     await myStore.getFolderAlbum(getValue.CO, getValue.CI);
+//     cModel.value = myStore.albumProject;
+//   }
   await actions().onInit();
 });
 </script>
 <template>
     <div>
       <header>
-            <h1>My Photo Album</h1>
+            <h1>{{ albumValue }}</h1>
         </header>
       <div class="document-search">
         <div class="row">
-          <div class="col-2 w-country-search">
-            <div class="box-input-search-dropdown">
-              <div class="inputClean">
-                <div class="input input-pi">
-                  <Dropdown
-                    v-model="modelSearch.countryName"
-                    optionLabel="countryName"
-                    optionValue="countryName"
-                    :options="countryList"
-                    placeholder="เลือกประเทศ"
-                    :filter="true"
-                    class="p-dropdown-country"
-                  >
-                    <template #value="countryList">
-                      <div v-if="countryList.value">
-                        <div>{{ countryList.value }}</div>
-                      </div>
-                      <span v-else>
-                        {{ countryList.placeholder }}
-                      </span>
-                    </template>
-                    <template #option="countryList">
-                      <div class="template-country">
-                        <div class="template-country-content">
-                          {{ countryList.option.countryName }}
-                        </div>
-                      </div>
-                    </template>
-                  </Dropdown>
-                  <div class="labelInput">
-                    <label><i class="pi pi-globe"></i> ประเทศ </label>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+
           <div class="col-4 w-input-search">
             <div class="inputClean">
               <div class="input">
                 <input
-                  v-model="modelSearch.cityName"
+                  v-model="countryValue"
+                  type="text"
+                  placeholder="ชื่อประเทศ"
+                  autocomplete="off"
+                />
+                <div class="labelInput">
+                  <label><i class="fa-solid fa-magnifying-glass"></i> ชื่อประเทศ </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="col-4 w-input-search">
+            <div class="inputClean">
+              <div class="input">
+                <input
+                  v-model="cityValue"
                   type="text"
                   placeholder="ชื่อเมือง"
                   autocomplete="off"
                 />
                 <div class="labelInput">
-                  <label><i class="fa-solid fa-magnifying-glass"></i> ค้นหา </label>
+                  <label><i class="fa-solid fa-magnifying-glass"></i> ชื่อเมือง </label>
                 </div>
               </div>
             </div>
@@ -259,23 +229,8 @@ onMounted(async () => {
               </div>
             </div>
           </div>
-          <div class="col-auto pt-2">
-            <div class="document-search-accept">
-              <Button
-                label="Search"
-                icon="pi pi-search"
-                class="bg-search p-button-sm p-button-rounded w-100"
-                @click="events().setSearch"
-              />
-            </div>
-          </div>
-          <div class="w-btn-clear-search" @click="events().clearSearch">
-            <p class="text-blue clear-all cursor-pointer">
-              Clear all
-            </p>
-          </div>
           <div class="col w-btn-search">
-            <Button @click="actions().onCreateAlbum()">สร้างหมวด</Button>
+            <Button @click="actions().onCreateAlbum()">สร้างอัลบั้ม</Button>
           </div>
         </div>
       </div>
@@ -292,7 +247,7 @@ onMounted(async () => {
             </div>
         </div> -->
         <div v-for="item in cModel" :key="item.albumName">
-          <div class="card-album cursor-pointer mt-2" @click="events().onViewSetAlbum(item.albumName, modelSearch.countryName, modelSearch.cityName)">
+          <div class="card-album cursor-pointer mt-2" @click="123">
             <p class="text-center mt-4">{{ item.albumName }}</p>
           </div>
         </div>
@@ -338,7 +293,7 @@ onMounted(async () => {
     padding-right: 0.75rem;
   }
   .w-input-search {
-    width: 260px;
+    width: 300px;
     padding-left: 0.75rem;
     padding-right: 0.75rem;
   }

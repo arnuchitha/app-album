@@ -8,7 +8,12 @@ const router = createRouter({
       path: '/album',
       name: 'album',
       component: () => import('../views/album/albumViews.vue')
-    }
+    },
+    {
+      path: '/album/albumSet',
+      name: 'albumSet',
+      component: () => import('../components/albumSet/albumSetViews.vue')
+    },
   ]
 })
 

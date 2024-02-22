@@ -2,9 +2,17 @@
 import { RouterLink, RouterView } from 'vue-router'
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
+import { useAlbum } from "@/stores/album-store";
 import LoginVue from './components/Login.vue';
 
 const router = useRouter();
+const isActiveMain = ref(false);
+const myStore = useAlbum();
+
+router.afterEach((r) => {
+  isActiveMain.value = r.path == "/" ? true : false;
+  myStore.setWaitTimeDelayOnChangeRouter();
+});
 
 </script>
 
@@ -32,3 +40,4 @@ body {
   padding: 40px 20px;
 }
 </style>
+@/stores/album-store

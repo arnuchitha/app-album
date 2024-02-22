@@ -12,14 +12,21 @@ interface iState {
   albumProject: iAlbumProject[];
   countryList: iCountryList[];
   cityList: iCityList[];
+  isDelayPage: boolean;
+  isTimeOnDelay: number;
 }
 export const useAlbum = defineStore("useAlbum", {
   state: (): iState => ({
     albumProject : [],
     countryList: [],
     cityList: [],
+    isDelayPage: false,
+    isTimeOnDelay: 300,
   }),
   getters: {
+    getDelayPage(state) {
+      return state.isDelayPage;
+    },
   },
   actions: {
     async createFolder (albumName: String, countryName: String, cityName: String ) {
@@ -56,6 +63,12 @@ export const useAlbum = defineStore("useAlbum", {
     //       return res.data;
     //     });
     // },
+    setWaitTimeDelayOnChangeRouter() {
+      this.isDelayPage = true;
+      setTimeout(() => {
+        this.isDelayPage = false;
+      }, this.isTimeOnDelay);
+    },
 
   },
 });
