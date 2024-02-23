@@ -5,14 +5,8 @@ import { useToast } from "primevue/usetoast";
 import { useDialog } from "primevue/usedialog";
 import { useAlbum } from "@/stores/album-store";
 
-interface iCateSelected {
-  pcCode: string;
-  pcName: string;
-}
-
 const dialogRef = inject("dialogRef") as any;
 const confirm = useConfirm();
-const command = ref("");
 const toast = useToast();
 const isReady = ref("WARN");
 const albumName = ref("");
@@ -24,7 +18,8 @@ const actions = () => {
   const ac = {
     onInit: async () => {
       if (dialogRef.value.data) {
-        command.value = "detail";
+        countryName.value = dialogRef.value.data.countryName;
+        cityName.value = dialogRef.value.data.cityName;
       }
       setTimeout(() => {
         isReady.value = "READY";
@@ -44,8 +39,15 @@ const events = () => {
       dialogRef.value.close(true);
     },
     create: async () => {
-        let resInsert = true;
-      if(resInsert){
+      const resInsert = await myStore.createFolder(albumName.value, countryName.value, cityName.value)
+        .then(async (res) => {
+          setTimeout(() => {
+
+          }, 300);
+          return res;
+        });
+      
+      if(resInsert == true){
         toast.add({
             severity: `success`,
             summary: `Data Success`,
@@ -61,6 +63,9 @@ const events = () => {
             life: 2000,
         });
       }
+      setTimeout(() => {
+        dialogRef.value.close(resInsert);
+      }, 300);
     },
   };
   return ev;
@@ -169,7 +174,7 @@ onMounted(async () => {
         </div>
         <div class="col-auto pr-10 pl-10">
           <Button label="เพิ่มอัลบั้ม" class="w-180 p-button-sm p-button-rounded"
-            @click="events().checkData()" icon="fa-sharp fa-solid fa-circle-check" />
+            @click="events().create()" icon="fa-sharp fa-solid fa-circle-check" />
         </div>
       </div>
     </div>

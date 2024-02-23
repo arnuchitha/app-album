@@ -4,22 +4,12 @@ import { computed, onMounted, reactive, ref, inject, h, watch, toRaw } from "vue
 import { useRouter } from "vue-router";
 import { useDialog } from "primevue/usedialog";
 import { useAlbum } from "@/stores/album-store";
-import albumSetCreate from "@/components/albumSet/albumSetCreate.vue";
+import albumPhotoCreate from "@/components/albumSet/albumPhotoCreate.vue";
 import type iAlbumSet from "@/interfaces/album-set";
 
 interface Photo {
   id: number;
   url: string;
-}
-
-interface setSearch {
-  countryName: string;
-  cityName: string;
-}
-
-interface setSearchShow {
-  CO: string;
-  CI: string;
 }
 
 interface Album {
@@ -55,18 +45,15 @@ const isReady = ref("WARN");
 const myStore = useAlbum();
 const cModel = ref([] as iAlbumSet []);
 const albumValue = ref("");
+const albumSetValue = ref("");
 const countryValue = ref("");
 const cityValue = ref ("");
-const keySearch = ref("");
-const countryList = ref(myStore.countryList);
 
 const actions = () => {
   const ac = {
     onInit: async () => {
-        await myStore.getCountryList();
-        countryList.value = myStore.countryList;
-        await myStore.getFolderAlbumSet(albumValue.value, countryValue.value, cityValue.value);
-        cModel.value = myStore.albumSet;
+        // await myStore.getFolderAlbumSet(albumValue.value, countryValue.value, cityValue.value);
+        // cModel.value = myStore.albumSet;
         // await ac.getDataView();
         setTimeout(() => {
           isReady.value = "READY";
@@ -75,7 +62,7 @@ const actions = () => {
     getDataView: async () => {
     },
     onCreateAlbumSet: () =>{
-      modalDialog.open( albumSetCreate, {
+      modalDialog.open( albumPhotoCreate, {
         props: {
           closeOnEscape: true,
           rtl: false,
@@ -83,7 +70,7 @@ const actions = () => {
           style: {
             width: "1000px",
             margin: "0px",
-            position: "fixed",
+            position: "fixed",            
           },
           breakpoints: {
             "960px": "75vw",
@@ -93,14 +80,15 @@ const actions = () => {
         templates: {
           header: () => {
             return [
-              h("div", { class: "header-dialog" }, [h("span", "เพิ่มอัลบั้ม")]),
+              h("div", { class: "header-dialog" }, [h("span", "เพิ่มรูปภาพ")]),
             ];
           },
         },
         data: {
           albumName: albumValue.value,
           countryName: countryValue.value,
-          cityName: cityValue.value
+          cityName: cityValue.value,
+          albumSetName: albumSetValue.value,
         },
         onClose: async (options) => {
           if (options?.data == true) {
@@ -122,12 +110,6 @@ const events =() => {
       clearSearch: () => {
         
       },
-      onViewAlbumPhoto: (albumName: string, countryName: string, cityName: string, albumSetName: string) => {
-        router.push({
-          path: "/albumPhoto",
-          query: { albumName: albumName, countryName: countryName, cityName: cityName, albumSetName: albumSetName },
-        });
-      },
     };
   return ev;
 }
@@ -136,87 +118,39 @@ onMounted(async () => {
     albumValue.value = String(router.currentRoute.value.query.albumName);
     countryValue.value = String(router.currentRoute.value.query.countryName);
     cityValue.value = String(router.currentRoute.value.query.cityName);
+    albumSetValue.value = String(router.currentRoute.value.query.albumSetName);
+
+    console.log(albumValue.value, countryValue.value, cityValue.value, albumSetValue.value);
   await actions().onInit();
 });
 </script>
 <template>
     <div>
-      <header>
-            <h1>{{ albumValue }}</h1>
+        <header>
+            <h1>{{ albumSetValue }}</h1>
         </header>
-      <div class="document-search">
-        <div class="row">
-
-          <div class="col-4 w-input-search">
-            <div class="inputClean">
-              <div class="input">
-                <input
-                  v-model="countryValue"
-                  type="text"
-                  placeholder="ชื่อประเทศ"
-                  autocomplete="off"
-                />
-                <div class="labelInput">
-                  <label><i class="fa-solid fa-magnifying-glass"></i> ชื่อประเทศ </label>
+        <div class="document-search">
+            <div class="row">
+                <div class="col w-btn-search">
+                    <Button @click="actions().onCreateAlbumSet()">Uploadภาพ</Button>
                 </div>
-              </div>
             </div>
-          </div>
-
-
-
-          <div class="col-4 w-input-search">
-            <div class="inputClean">
-              <div class="input">
-                <input
-                  v-model="cityValue"
-                  type="text"
-                  placeholder="ชื่อเมือง"
-                  autocomplete="off"
-                />
-                <div class="labelInput">
-                  <label><i class="fa-solid fa-magnifying-glass"></i> ชื่อเมือง </label>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-4 w-input-search">
-            <div class="inputClean">
-              <div class="input">
-                <input
-                  v-model="keySearch"
-                  type="text"
-                  placeholder="ชื่อหมวด"
-                  autocomplete="off"
-                />
-                <div class="labelInput">
-                  <label><i class="fa-solid fa-magnifying-glass"></i> ค้นหา </label>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col w-btn-search">
-            <Button @click="actions().onCreateAlbumSet()">สร้างอัลบั้ม</Button>
-          </div>
         </div>
-      </div>
         <main>
-        <!-- <div v-if="cModel.length === 0">
-            <p>No albums found. Please add some.</p>
-        </div>
-        <div v-else>
+        <div>
             <div v-for="album in albums" :key="album.id">
             <h2>{{ album.name }}</h2>
             <div class="album-photos">
                 <img v-for="photo in album.photos" :key="photo.id" :src="photo.url" alt="Photo">
             </div>
             </div>
-        </div> -->
-        <div v-for="item in cModel" :key="item.albumSetName">
-          <div class="card-album cursor-pointer mt-2" @click="events().onViewAlbumPhoto(albumValue, countryValue, cityValue, item.albumSetName)">
+        </div>
+
+        <!-- <div v-for="item in cModel" :key="item.albumSetName">
+          <div class="card-album cursor-pointer mt-2" @click="123">
             <p class="text-center mt-4">{{ item.albumSetName }}</p>
           </div>
-        </div>
+        </div> -->
         </main>
     </div>
   </template>

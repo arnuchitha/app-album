@@ -5,14 +5,19 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/album',
+      path: '/',
       name: 'album',
       component: () => import('../views/album/albumViews.vue')
     },
     {
-      path: '/album/albumSet',
+      path: '/albumSet',
       name: 'albumSet',
       component: () => import('../components/albumSet/albumSetViews.vue')
+    },
+    {
+      path: '/albumPhoto',
+      name: 'albumPhoto',
+      component: () => import('../components/albumSet/albumPhotoViews.vue')
     },
   ]
 })

@@ -4,6 +4,8 @@ import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 import { useDialog } from "primevue/usedialog";
 import { useAlbum } from "@/stores/album-store";
+import UploadFilesComponent from "./UploadFilesComponent.vue";
+import type iAlbumFile from "@/interfaces/album-photo";
 
 const dialogRef = inject("dialogRef") as any;
 const confirm = useConfirm();
@@ -15,6 +17,7 @@ const albumSetName = ref("");
 const countryName = ref("");
 const cityName = ref("");
 const myStore = useAlbum();
+const cModel = ref([] as iAlbumFile [])
 
 const actions = () => {
   const ac = {
@@ -23,6 +26,9 @@ const actions = () => {
         albumName.value = dialogRef.value.data.albumName;
         countryName.value = dialogRef.value.data.countryName;
         cityName.value = dialogRef.value.data.cityName;
+        albumSetName.value = dialogRef.value.data.albumSetName;
+
+        console.log(albumName.value, countryName.value, cityName.value, albumSetName.value);
       }
       setTimeout(() => {
         isReady.value = "READY";
@@ -54,7 +60,7 @@ const events = () => {
         toast.add({
             severity: `success`,
             summary: `Data Success`,
-            detail: `เพิ่มอัลบั้ม เรียบร้อยแล้ว`,
+            detail: `เพิ่มรูปภาพ เรียบร้อยแล้ว`,
             life: 2000,
         });
         dialogRef.value.close(resInsert);
@@ -70,18 +76,13 @@ const events = () => {
         dialogRef.value.close(resInsert);
       }, 300);
     },
+    onAdvancedUpload: (item: any) => {
+        console.log(item)
+        // toast.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000 });
+    },
   };
   return ev;
 };
-
-
-// const disabled = ref(true);
-// setTimeout(() => {
-//   if (command.value == "edit" || command.value == "create") {
-//     disabled.value = false;
-//   }
-//   return disabled.value;
-// }, 5000);
 
 onMounted(async () => {
   await actions()
@@ -139,7 +140,6 @@ onMounted(async () => {
                 <div class="labelInput">
                   <label> ชื่ออัลบั้ม </label>
                 </div>
-                <i class="asterisk fas fa-asterisk"></i>
               </div>
             </div>
           </div>
@@ -162,6 +162,26 @@ onMounted(async () => {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+        <div class="border-eff mt-3 mb-0"></div>
+        <div class="row">
+            <!-- <div class="card">
+                <Toast />
+                <FileUpload 
+                    name="demo[]" url="/api/upload" 
+                    @upload="events().onAdvancedUpload($event)" 
+                    :multiple="true" 
+                    accept="image/*" 
+                    :maxFileSize="1000000"
+                    choose-label="เลือกรูป"
+                    cancel-label="ลบทั้งหมด"
+                    upload-label="อัปโหลด"
+                >
+                </FileUpload>
+            </div> -->
+          <div class="col-12 height-bottom">
+            <UploadFilesComponent v-model:model="cModel" />
           </div>
         </div>
       </div>
@@ -223,6 +243,7 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   pointer-events: auto;
+  margin-bottom: 200px !important;
   max-height: 100% !important;
   transform: scale(1);
 }
@@ -383,5 +404,7 @@ onMounted(async () => {
     margin: 0;
   }
 }
+.height-bottom {
+  height: 25rem;;
+}
 </style>
-@/stores/album-store

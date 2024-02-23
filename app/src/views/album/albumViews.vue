@@ -117,9 +117,14 @@ const actions = () => {
             ];
           },
         },
+        data: {
+          countryName: countryValue.value,
+          cityName: cityValue.value
+        },
         onClose: async (options) => {
           if (options?.data == true) {
-              console.log("Complete");
+              setTimeout(() => {
+              }, 300);
           }
           // if (options?.data) {
           //   if(isManager.value){
@@ -155,19 +160,19 @@ const events =() => {
           getURL = Object.assign({}, getURL, { CI: cityValue.value });
         }
         router.push({
-          path: "/album",
+          path: "/",
           query: getURL,
         });
       },
       clearSearch: () => {
         console.log("IN CLEAR");
         router.push({
-          path: "/album",
+          path: "/",
         });
       },
       onViewSetAlbum: (albumName: string, countryName: string, cityName: string) => {
         router.push({
-          path: "/album/albumset",
+          path: "/albumset",
           query: { albumName: albumName, countryName: countryName, cityName: cityName },
         });
       },
@@ -275,15 +280,12 @@ onMounted(async () => {
             </p>
           </div>
           <div class="col w-btn-search">
-            <Button @click="actions().onCreateAlbum()">สร้างหมวด</Button>
+            <Button @click="actions().onCreateAlbum()" :disabled="cModel.length == 0">สร้างหมวด</Button>
           </div>
         </div>
       </div>
         <main>
-        <!-- <div v-if="cModel.length === 0">
-            <p>No albums found. Please add some.</p>
-        </div>
-        <div v-else>
+        <!-- <div>
             <div v-for="album in albums" :key="album.id">
             <h2>{{ album.name }}</h2>
             <div class="album-photos">
@@ -291,6 +293,7 @@ onMounted(async () => {
             </div>
             </div>
         </div> -->
+
         <div v-for="item in cModel" :key="item.albumName">
           <div class="card-album cursor-pointer mt-2" @click="events().onViewSetAlbum(item.albumName, modelSearch.countryName, modelSearch.cityName)">
             <p class="text-center mt-4">{{ item.albumName }}</p>
@@ -313,7 +316,7 @@ onMounted(async () => {
   max-width: 200px;
   // max-height: 200px;
   height: 80px;  
-  flex-wrap: wrap;
+  
   overflow-y: auto;
   gap: 1rem;
 }
