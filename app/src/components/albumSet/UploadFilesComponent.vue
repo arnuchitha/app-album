@@ -43,49 +43,49 @@ const objUrl = (o: any) => {
 }
 
 const onSelectedFiles = (event: any) => {
-    // if (countFilesSelected.value < event.files.length) {
-    //     const countAddFiles = event.files.length - countFilesSelected.value;
-    //     for (var i = 1; i <= countAddFiles; i++) {
-    //         let lastFile = event.files[event.files.length - i];
-    //         if (lastFile.size > 5000000) {
-    //             toast.add({
-    //                 severity: "warn",
-    //                 summary: "File size limit",
-    //                 detail: "ไฟล์มีขนาดใหญ่เกิน 5Mb.",
-    //                 life: 3000,
-    //             });
-    //             event.files.pop();
-    //             return;
-    //         } else {
-    //             let strArray = lastFile.name.split(".");
-    //             let setFileType = strArray[strArray.length - 1];
-    //             let setFileName = "u" + mainStore.userID + "-po-file-" + i + "-" + new Date().getTime() + "." + setFileType;
-    //             let finalLastFile = new File([lastFile], setFileName, { type: lastFile.type });
-    //             if (finalLastFile) {
-    //                 event.files[event.files.length - i] = finalLastFile;
-    //                 files.value = event.files;
-    //                 let fileSET = {
-    //                     appoFileID: 0,
-    //                     appoFileName: setFileName,
-    //                     appoFileType: lastFile.type,
-    //                     appoFileSize: lastFile.size,
-    //                     appoID: 0,
-    //                     createBy: 0,
-    //                     createDate: new Date,
-    //                     updateBy: 0,
-    //                     updateDate: new Date,
-    //                     isDeleted: 0,
-    //                     isVisible: 1,
-    //                     appoFileUpload: event.files[event.files.length - i],
-    //                 }
-    //                 fileModel.value.push(fileSET);
-    //             }
-    //         }
-    //     }
-    //     if (countAddFiles) {
-    //         countFilesSelected.value = event.files.length;
-    //     }
-    // }
+    if (countFilesSelected.value < event.files.length) {
+        const countAddFiles = event.files.length - countFilesSelected.value;
+        for (var i = 1; i <= countAddFiles; i++) {
+            let lastFile = event.files[event.files.length - i];
+            if (lastFile.size > 5000000) {
+                toast.add({
+                    severity: "warn",
+                    summary: "File size limit",
+                    detail: "ไฟล์มีขนาดใหญ่เกิน 5Mb.",
+                    life: 3000,
+                });
+                event.files.pop();
+                return;
+            } else {
+                // let strArray = lastFile.name.split(".");
+                // let setFileType = strArray[strArray.length - 1];
+                // let setFileName = "u" + mainStore.userID + "-po-file-" + i + "-" + new Date().getTime() + "." + setFileType;
+                let finalLastFile = new File([lastFile], lastFile.name, { type: lastFile.type });
+                if (finalLastFile) {
+                    event.files[event.files.length - i] = finalLastFile;
+                    files.value = event.files;
+                    let fileSET = {
+                        albumFileID: 0,
+                        albumFileName: lastFile.name,
+                        albumFileType: lastFile.type,
+                        albumFileSize: lastFile.size,
+                        albumID: 0,
+                        createBy: 0,
+                        createDate: new Date,
+                        updateBy: 0,
+                        updateDate: new Date,
+                        isDeleted: 0,
+                        isVisible: 1,
+                        albumFileUpload: event.files[event.files.length - i],
+                    }
+                    fileModel.value.push(fileSET);
+                }
+            }
+        }
+        if (countAddFiles) {
+            countFilesSelected.value = event.files.length;
+        }
+    }
 
 }
 
@@ -189,14 +189,14 @@ const checkTypeFile = (str: string) => {
                     </div>
                 </div>
             </div> 
-            <!-- <div class="align-items-center">
+            <div class="align-items-center">
                 <div class="row my-4">
                     <div class="col">
                         <i class="pi pi-cloud-upload p-2 fs-60 fc-green" />
                         <p class="mt-2 mb-0 fc-green font-kanit">ลากไฟล์ลง ที่นี่ เพื่ออัพโหลด</p>
                     </div>
                 </div>
-            </div>     -->
+            </div>    
         </template>
     </FileUpload>
 </template>

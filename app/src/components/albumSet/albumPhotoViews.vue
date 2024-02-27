@@ -69,7 +69,7 @@ const actions = () => {
           modal: true,
           style: {
             width: "1000px",
-            margin: "0px",
+            margin: "100px",
             position: "fixed",            
           },
           breakpoints: {
@@ -119,8 +119,6 @@ onMounted(async () => {
     countryValue.value = String(router.currentRoute.value.query.countryName);
     cityValue.value = String(router.currentRoute.value.query.cityName);
     albumSetValue.value = String(router.currentRoute.value.query.albumSetName);
-
-    console.log(albumValue.value, countryValue.value, cityValue.value, albumSetValue.value);
   await actions().onInit();
 });
 </script>

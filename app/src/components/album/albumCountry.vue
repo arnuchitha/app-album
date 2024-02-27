@@ -4,31 +4,19 @@ import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 import { useDialog } from "primevue/usedialog";
 import { useAlbum } from "@/stores/album-store";
-import UploadFilesComponent from "./UploadFilesComponent.vue";
-import type iAlbumFile from "@/interfaces/album-photo";
 
 const dialogRef = inject("dialogRef") as any;
 const confirm = useConfirm();
-const command = ref("");
 const toast = useToast();
 const isReady = ref("WARN");
 const albumName = ref("");
-const albumSetName = ref("");
 const countryName = ref("");
 const cityName = ref("");
 const myStore = useAlbum();
-const cModel = ref([] as iAlbumFile [])
 
 const actions = () => {
   const ac = {
     onInit: async () => {
-      if (dialogRef.value.data) {
-        albumName.value = dialogRef.value.data.albumName;
-        countryName.value = dialogRef.value.data.countryName;
-        cityName.value = dialogRef.value.data.cityName;
-        albumSetName.value = dialogRef.value.data.albumSetName;
-        
-      }
       setTimeout(() => {
         isReady.value = "READY";
       }, 300);
@@ -40,14 +28,14 @@ const actions = () => {
 const events = () => {
   const ev = {
     checkData: async () => {
-      const resInsert = await myStore.createAlbumSet(albumName.value, countryName.value, cityName.value, albumSetName.value);
+      const resInsert = await myStore.createFolder(albumName.value, countryName.value, cityName.value);
       dialogRef.value.close(resInsert);
     },
     cancle: () => {
       dialogRef.value.close(true);
     },
     create: async () => {
-      const resInsert = await myStore.uploadAlbumSet(albumName.value, countryName.value, cityName.value, albumSetName.value, cModel.value)
+      const resInsert = await myStore.createFolderCountry(countryName.value)
         .then(async (res) => {
           setTimeout(() => {
 
@@ -59,7 +47,7 @@ const events = () => {
         toast.add({
             severity: `success`,
             summary: `Data Success`,
-            detail: `เพิ่มรูปภาพ เรียบร้อยแล้ว`,
+            detail: `เพิ่มเทมเพลท เรียบร้อยแล้ว`,
             life: 2000,
         });
         dialogRef.value.close(resInsert);
@@ -75,13 +63,18 @@ const events = () => {
         dialogRef.value.close(resInsert);
       }, 300);
     },
-    onAdvancedUpload: (item: any) => {
-        console.log(item)
-        // toast.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000 });
-    },
   };
   return ev;
 };
+
+
+// const disabled = ref(true);
+// setTimeout(() => {
+//   if (command.value == "edit" || command.value == "create") {
+//     disabled.value = false;
+//   }
+//   return disabled.value;
+// }, 5000);
 
 onMounted(async () => {
   await actions()
@@ -104,13 +97,17 @@ onMounted(async () => {
           <div class="col pl-10">
             <div class="inputClean">
               <div class="input select-pi">
-                <div class="inputClean">
-                  <div class="input">
-                    <input type="text" autocomplete="off" v-model="albumName" />
-                    <div class="labelInput">
-                      <label> ชื่อหมวดอัลบั้ม </label>
+                <!-- <Dropdown class="cursor-pointer" v-dropdownenter :options="departmentList" optionValue="departmentId"
+                  optionLabel="nameLocal" v-model="cModel.masterTemplate.departmentId">
+                  <template #option="slotProps">
+                    <div class="drop-down-basic-item">
+                      <i class="fa-solid fa-file"></i>
+                      <div>{{ slotProps.option.nameLocal }}</div>
                     </div>
-                  </div>
+                  </template>
+                </Dropdown> -->
+                <div class="labelInput">
+                  <label> ประเภทหมวด </label>
                 </div>
               </div>
             </div>
@@ -127,7 +124,7 @@ onMounted(async () => {
             <div class="box-title-sub">
               <div class="row">
                 <div class="col">
-                  <h4><i class="fa-solid fa-circle-check title-icon"></i>ข้อมูลอัลบั้ม</h4>
+                  <h4><i class="fa-solid fa-circle-check title-icon"></i>ข้อมูลประเทศ</h4>
                 </div>
               </div>
             </div>
@@ -135,55 +132,13 @@ onMounted(async () => {
           <div class="col pr-10">
             <div class="inputClean">
               <div class="input">
-                <input type="text" autocomplete="off" v-model="albumSetName" />
-                <div class="labelInput">
-                  <label> ชื่ออัลบั้ม </label>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col pl-10">
-            <div class="inputClean">
-              <div class="input">
                 <input type="text" autocomplete="off" v-model="countryName" />
                 <div class="labelInput">
-                  <label> ประเทศ </label>
+                  <label> ชื่อประเทศ </label>
                 </div>
+                <i class="asterisk fas fa-asterisk"></i>
               </div>
             </div>
-          </div>
-          <div class="col pl-10">
-            <div class="inputClean">
-              <div class="input">
-                <input type="text" autocomplete="off" v-model="cityName" />
-                <div class="labelInput">
-                  <label> เมือง </label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="border-eff mt-3 mb-0"></div>
-        <div class="row">
-            <!-- <div class="card">
-                <Toast />
-                <FileUpload 
-                    name="demo[]" url="/api/upload" 
-                    @upload="events().onAdvancedUpload($event)" 
-                    :multiple="true" 
-                    accept="image/*" 
-                    :maxFileSize="1000000"
-                    choose-label="เลือกรูป"
-                    cancel-label="ลบทั้งหมด"
-                    upload-label="อัปโหลด"
-                >
-                </FileUpload>
-            </div> -->
-          <div class="col-12">
-            <div class="box-title-sub"><h4><i class="fa-solid fa-circle-check title-icon"></i> ไฟล์แนบ</h4></div>
-          </div>
-          <div class="col-12 height-bottom">
-            <UploadFilesComponent v-model:model="cModel" />
           </div>
         </div>
       </div>
@@ -194,7 +149,7 @@ onMounted(async () => {
         <div class="col">
         </div>
         <div class="col-auto pr-10 pl-10">
-          <Button label="เพิ่มรูปภาพ" class="w-180 p-button-sm p-button-rounded"
+          <Button label="เพิ่มประเทศ" class="w-180 p-button-sm p-button-rounded"
             @click="events().create()" icon="fa-sharp fa-solid fa-circle-check" />
         </div>
       </div>
@@ -245,7 +200,6 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   pointer-events: auto;
-  margin-bottom: 200px !important;
   max-height: 100% !important;
   transform: scale(1);
 }
@@ -406,17 +360,5 @@ onMounted(async () => {
     margin: 0;
   }
 }
-.height-bottom {
-  height: 25rem;;
-}
-.box-title-sub{
-  h4 {
-    color: var(--inactive-color);
-    .title-icon {
-      padding-right: 5px;
-      color: var(--ico-color-tab-active);        
-    }
-
-  }
-}
 </style>
+@/stores/album-store

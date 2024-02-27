@@ -5,7 +5,10 @@ import { useRouter } from "vue-router";
 import { useDialog } from "primevue/usedialog";
 import { useAlbum } from "@/stores/album-store";
 import albumCreate from "@/components/album/albumCreate.vue";
+import albumCreateCountry from "@/components/album/albumCountry.vue"
+import albumCreateCity from "@/components/album/albumCity.vue"
 import type iAlbumProject from "@/interfaces/album-project";
+import type iCountryList from "@/interfaces/country-list";
 
 interface Photo {
   id: number;
@@ -120,6 +123,89 @@ const actions = () => {
         data: {
           countryName: countryValue.value,
           cityName: cityValue.value
+        },
+        onClose: async (options) => {
+          if (options?.data == true) {
+              setTimeout(() => {
+              }, 300);
+          }
+          // if (options?.data) {
+          //   if(isManager.value){
+          //     await myStore.fetchTemplatesListByAll();
+          //     collectionSet.value = myStore.listTemplates;
+          //   }else{
+          //     await myStore.fetchTemplatesListByDepartmentID(userLogin.departmentId);
+          //     collectionSet.value = myStore.listTemplates;
+          //   }
+          // }
+        },
+      });
+    },
+    onCreateCountry: () =>{
+      modalDialog.open( albumCreateCountry, {
+        props: {
+          closeOnEscape: true,
+          rtl: false,
+          modal: true,
+          style: {
+            width: "1000px",
+            margin: "0px",
+            position: "fixed",
+          },
+          breakpoints: {
+            "960px": "75vw",
+            "640px": "90vw",
+          },
+        },
+        templates: {
+          header: () => {
+            return [
+              h("div", { class: "header-dialog" }, [h("span", "เพิ่มประเทศ")]),
+            ];
+          },
+        },
+        onClose: async (options) => {
+          if (options?.data == true) {
+              setTimeout(() => {
+              }, 300);
+          }
+          // if (options?.data) {
+          //   if(isManager.value){
+          //     await myStore.fetchTemplatesListByAll();
+          //     collectionSet.value = myStore.listTemplates;
+          //   }else{
+          //     await myStore.fetchTemplatesListByDepartmentID(userLogin.departmentId);
+          //     collectionSet.value = myStore.listTemplates;
+          //   }
+          // }
+        },
+      });
+    },
+    onCreateCity: (obj : iCountryList[]) =>{
+      modalDialog.open( albumCreateCity, {
+        props: {
+          closeOnEscape: true,
+          rtl: false,
+          modal: true,
+          style: {
+            width: "1000px",
+            margin: "0px",
+            position: "fixed",
+          },
+          breakpoints: {
+            "960px": "75vw",
+            "640px": "90vw",
+          },
+        },
+        templates: {
+          header: () => {
+            return [
+              h("div", { class: "header-dialog" }, [h("span", "เพิ่มเมือง")]),
+            ];
+          },
+        },
+        data: {
+          model: obj,
         },
         onClose: async (options) => {
           if (options?.data == true) {
@@ -278,6 +364,12 @@ onMounted(async () => {
             <p class="text-blue clear-all cursor-pointer">
               Clear all
             </p>
+          </div>
+          <div class="col w-btn-search">
+            <Button @click="actions().onCreateCountry()">สร้างประเทศ</Button>
+          </div>
+          <div class="col w-btn-search">
+            <Button @click="actions().onCreateCity(countryList)">สร้างเมือง</Button>
           </div>
           <div class="col w-btn-search">
             <Button @click="actions().onCreateAlbum()" :disabled="cModel.length == 0">สร้างหมวด</Button>
