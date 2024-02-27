@@ -1,4 +1,5 @@
 export default interface iCityList {
-    cityName: string;
-  }
+  countryName: string;
+  cityName: string;
+}
   

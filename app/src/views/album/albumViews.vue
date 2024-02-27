@@ -9,6 +9,7 @@ import albumCreateCountry from "@/components/album/albumCountry.vue"
 import albumCreateCity from "@/components/album/albumCity.vue"
 import type iAlbumProject from "@/interfaces/album-project";
 import type iCountryList from "@/interfaces/country-list";
+import type iCityList from "@/interfaces/cityList"
 
 interface Photo {
   id: number;
@@ -61,6 +62,7 @@ const countryValue = ref("");
 const cityValue = ref ("");
 const keySearch = ref("");
 const countryList = ref(myStore.countryList);
+const cityList = ref(myStore.cityList);
 
 const modelSearch: setSearch = reactive({
   countryName: "",
@@ -71,7 +73,10 @@ const actions = () => {
   const ac = {
     onInit: async () => {
         await myStore.getCountryList();
+        await myStore.getCityList();
         countryList.value = myStore.countryList;
+        cityList.value = myStore.cityList;
+        console.log(cityList.value)
         // await ac.getDataView();
         setTimeout(() => {
           isReady.value = "READY";
@@ -278,121 +283,152 @@ onMounted(async () => {
 });
 </script>
 <template>
-    <div>
+    <div >
       <header>
             <h1>My Photo Album</h1>
-        </header>
-      <div class="document-search">
-        <div class="row">
-          <div class="col-2 w-country-search">
-            <div class="box-input-search-dropdown">
-              <div class="inputClean">
-                <div class="input input-pi">
-                  <Dropdown
-                    v-model="modelSearch.countryName"
-                    optionLabel="countryName"
-                    optionValue="countryName"
-                    :options="countryList"
-                    placeholder="เลือกประเทศ"
-                    :filter="true"
-                    class="p-dropdown-country"
-                  >
-                    <template #value="countryList">
-                      <div v-if="countryList.value">
-                        <div>{{ countryList.value }}</div>
+          <div class="row">
+            <div class="col-7"></div>
+            <div class="col-auto">
+              <span>
+                <Button @click="actions().onCreateCountry()">สร้างประเทศ
+                </Button>
+              </span>
+            </div>
+            <div class="col-auto">
+              <span>
+                <Button @click="actions().onCreateCity(countryList)">สร้างเมือง
+                </Button>
+              </span>
+            </div>
+            <div class="col-auto">
+              <span>
+                <Button @click="actions().onCreateAlbum()" :disabled="cModel.length == 0">สร้างหมวด
+                </Button>
+              </span>
+            </div>
+          </div>
+      </header>
+    </div>
+    <div class="document-search">
+      <div class="row">
+        <div class="col-2 w-country-search">
+          <div class="box-input-search-dropdown">
+            <div class="inputClean">
+              <div class="input input-pi">
+                <Dropdown
+                  v-model="modelSearch.countryName"
+                  optionLabel="countryName"
+                  optionValue="countryName"
+                  :options="countryList"
+                  placeholder="เลือกประเทศ"
+                  :filter="true"
+                  class="p-dropdown-country"
+                >
+                  <template #value="countryList">
+                    <div v-if="countryList.value">
+                      <div>{{ countryList.value }}</div>
+                    </div>
+                    <span v-else>
+                      {{ countryList.placeholder }}
+                    </span>
+                  </template>
+                  <template #option="countryList">
+                    <div class="template-country">
+                      <div class="template-country-content">
+                        {{ countryList.option.countryName }}
                       </div>
-                      <span v-else>
-                        {{ countryList.placeholder }}
-                      </span>
-                    </template>
-                    <template #option="countryList">
-                      <div class="template-country">
-                        <div class="template-country-content">
-                          {{ countryList.option.countryName }}
-                        </div>
-                      </div>
-                    </template>
-                  </Dropdown>
-                  <div class="labelInput">
-                    <label><i class="pi pi-globe"></i> ประเทศ </label>
+                    </div>
+                  </template>
+                </Dropdown>
+                <div class="labelInput">
+                  <label><i class="pi pi-globe"></i> ประเทศ </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-4 w-input-search">
+          <div class="inputClean">
+            <div class="input input-pi">
+              <Dropdown
+                v-model="modelSearch.cityName"
+                optionLabel="cityName"
+                optionValue="cityName"
+                :options="cityList"
+                placeholder="เลือกเมือง"
+                :filter="true"
+                class="p-dropdown-country"
+              >
+                <template #value="cityList">
+                  <div v-if="cityList.value">
+                    <div>{{ cityList.value }}</div>
                   </div>
-                </div>
+                  <span v-else>
+                    {{ cityList.placeholder }}
+                  </span>
+                </template>
+                <template #option="cityList">
+                  <div class="template-country">
+                    <div class="template-country-content">
+                      {{ cityList.option.cityName }}
+                    </div>
+                  </div>
+                </template>
+              </Dropdown>
+              <div class="labelInput">
+                <label><i class="pi pi-globe"></i> เมือง </label>
               </div>
             </div>
           </div>
-          <div class="col-4 w-input-search">
-            <div class="inputClean">
-              <div class="input">
-                <input
-                  v-model="modelSearch.cityName"
-                  type="text"
-                  placeholder="ชื่อเมือง"
-                  autocomplete="off"
-                />
-                <div class="labelInput">
-                  <label><i class="fa-solid fa-magnifying-glass"></i> ค้นหา </label>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-4 w-input-search">
-            <div class="inputClean">
-              <div class="input">
-                <input
-                  v-model="keySearch"
-                  type="text"
-                  placeholder="ชื่อหมวด"
-                  autocomplete="off"
-                />
-                <div class="labelInput">
-                  <label><i class="fa-solid fa-magnifying-glass"></i> ค้นหา </label>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-auto pt-2">
-            <div class="document-search-accept">
-              <Button
-                label="Search"
-                icon="pi pi-search"
-                class="bg-search p-button-sm p-button-rounded w-100"
-                @click="events().setSearch"
+        </div>
+        <div class="col-4 w-input-search">
+          <div class="inputClean">
+            <div class="input">
+              <input
+                v-model="keySearch"
+                type="text"
+                placeholder="ชื่อหมวด"
+                autocomplete="off"
               />
+              <div class="labelInput">
+                <label><i class="fa-solid fa-magnifying-glass"></i> ค้นหา </label>
+              </div>
             </div>
           </div>
-          <div class="w-btn-clear-search" @click="events().clearSearch">
-            <p class="text-blue clear-all cursor-pointer">
-              Clear all
-            </p>
+        </div>
+        <div class="col-auto pt-2">
+          <div class="document-search-accept">
+            <Button
+              label="Search"
+              icon="pi pi-search"
+              class="bg-search p-button-sm p-button-rounded w-100"
+              @click="events().setSearch"
+            />
           </div>
-          <div class="col w-btn-search">
-            <Button @click="actions().onCreateCountry()">สร้างประเทศ</Button>
-          </div>
-          <div class="col w-btn-search">
-            <Button @click="actions().onCreateCity(countryList)">สร้างเมือง</Button>
-          </div>
-          <div class="col w-btn-search">
-            <Button @click="actions().onCreateAlbum()" :disabled="cModel.length == 0">สร้างหมวด</Button>
-          </div>
+        </div>
+        <div class="w-btn-clear-search" @click="events().clearSearch">
+          <p class="text-blue clear-all cursor-pointer">
+            Clear all
+          </p>
         </div>
       </div>
-        <main>
-        <!-- <div>
-            <div v-for="album in albums" :key="album.id">
-            <h2>{{ album.name }}</h2>
-            <div class="album-photos">
-                <img v-for="photo in album.photos" :key="photo.id" :src="photo.url" alt="Photo">
-            </div>
-            </div>
-        </div> -->
-
-        <div v-for="item in cModel" :key="item.albumName">
-          <div class="card-album cursor-pointer mt-2" @click="events().onViewSetAlbum(item.albumName, modelSearch.countryName, modelSearch.cityName)">
-            <p class="text-center mt-4">{{ item.albumName }}</p>
-          </div>
-        </div>
-        </main>
     </div>
+      <main>
+      <!-- <div>
+          <div v-for="album in albums" :key="album.id">
+          <h2>{{ album.name }}</h2>
+          <div class="album-photos">
+              <img v-for="photo in album.photos" :key="photo.id" :src="photo.url" alt="Photo">
+          </div>
+          </div>
+      </div> -->
+
+      <div v-for="item in cModel" :key="item.albumName">
+        <div class="card-album cursor-pointer mt-2" @click="events().onViewSetAlbum(item.albumName, modelSearch.countryName, modelSearch.cityName)">
+          <p class="text-center mt-4">{{ item.albumName }}</p>
+        </div>
+      </div>
+      </main>
   </template>
   
 <style scoped lang="scss">

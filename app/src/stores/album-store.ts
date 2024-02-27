@@ -65,13 +65,14 @@ export const useAlbum = defineStore("useAlbum", {
           return res.data;
         });
     },
-    // async getCityList () {
-    //   this.cityList = await apis.get("/albumview/getCityList")
-    //     .finish()
-    //     .then((res) => {
-    //       return res.data;
-    //     });
-    // },
+    async getCityList () {
+      this.cityList = await apis.get("/albumview/getCityList")
+        .finish()
+        .then((res) => {
+          console.log(res.data)
+          return res.data;
+        });
+    },
     setWaitTimeDelayOnChangeRouter() {
       this.isDelayPage = true;
       setTimeout(() => {
@@ -138,11 +139,12 @@ export const useAlbum = defineStore("useAlbum", {
       await apis.post("/albumview/createFolderCountry").data(data).finish();
       return true;
     },
-    async createFolderCountry (countryName: String) {
+    async createFolderCity (countryName: String, cityName:String) {
       const data = {
         countryName: countryName,
+        cityName: cityName,
       };
-      await apis.post("/albumview/createFolderCountry").data(data).finish();
+      await apis.post("/albumview/createFolderCity").data(data).finish();
       return true;
     },
 

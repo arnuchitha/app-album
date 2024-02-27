@@ -12,16 +12,9 @@ const toast = useToast();
 const isReady = ref("WARN");
 const albumName = ref("");
 const countryName = ref("");
+const countryValue = ref("");
 const cityName = ref("");
 const myStore = useAlbum();
-
-interface setSearch {
-  countryName: string;
-}
-
-const modelSearch: setSearch = reactive({
-  countryName: "",
-});
 
 const cModel = ref([] as iCountryList[]);
 
@@ -30,7 +23,6 @@ const actions = () => {
     onInit: async () => {
         if (dialogRef.value.data) {
         cModel.value = dialogRef.value.data.model;
-        console.log(cModel.value)
       }
       setTimeout(() => {
         isReady.value = "READY";
@@ -42,15 +34,11 @@ const actions = () => {
 
 const events = () => {
   const ev = {
-    checkData: async () => {
-      const resInsert = await myStore.createFolder(albumName.value, countryName.value, cityName.value);
-      dialogRef.value.close(resInsert);
-    },
     cancle: () => {
       dialogRef.value.close(true);
     },
     create: async () => {
-      const resInsert = await myStore.createFolder(albumName.value, countryName.value, cityName.value)
+      const resInsert = await myStore.createFolderCity(countryValue.value, cityName.value)
         .then(async (res) => {
           setTimeout(() => {
 
@@ -62,7 +50,7 @@ const events = () => {
         toast.add({
             severity: `success`,
             summary: `Data Success`,
-            detail: `เพิ่มเทมเพลท เรียบร้อยแล้ว`,
+            detail: `เพิ่มเมือง เรียบร้อยแล้ว`,
             life: 2000,
         });
         dialogRef.value.close(resInsert);
@@ -83,13 +71,11 @@ const events = () => {
 };
 
 
-// const disabled = ref(true);
-// setTimeout(() => {
-//   if (command.value == "edit" || command.value == "create") {
-//     disabled.value = false;
-//   }
-//   return disabled.value;
-// }, 5000);
+watch(countryName, async () => {
+  countryValue.value = countryName.value;
+    // await actions().getDataView();
+    // events().showData();
+});
 
 onMounted(async () => {
   await actions()
@@ -108,24 +94,6 @@ onMounted(async () => {
       <div class="col-7">
         <div class="row" style="margin-top: -60px !important">
           <div class="col">
-          </div>
-          <div class="col pl-10">
-            <div class="inputClean">
-              <div class="input select-pi">
-                <!-- <Dropdown class="cursor-pointer" v-dropdownenter :options="departmentList" optionValue="departmentId"
-                  optionLabel="nameLocal" v-model="cModel.masterTemplate.departmentId">
-                  <template #option="slotProps">
-                    <div class="drop-down-basic-item">
-                      <i class="fa-solid fa-file"></i>
-                      <div>{{ slotProps.option.nameLocal }}</div>
-                    </div>
-                  </template>
-                </Dropdown> -->
-                <div class="labelInput">
-                  <label> ประเภทหมวด </label>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -159,7 +127,7 @@ onMounted(async () => {
             <div class="inputClean">
                 <div class="input input-pi">
                   <Dropdown
-                    v-model="modelSearch.countryName"
+                    v-model="countryName"
                     optionLabel="countryName"
                     optionValue="countryName"
                     :options="cModel"
@@ -198,7 +166,7 @@ onMounted(async () => {
         <div class="col">
         </div>
         <div class="col-auto pr-10 pl-10">
-          <Button label="เพิ่มอัลบั้ม" class="w-180 p-button-sm p-button-rounded"
+          <Button label="เพิ่มเมือง" class="w-180 p-button-sm p-button-rounded"
             @click="events().create()" icon="fa-sharp fa-solid fa-circle-check" />
         </div>
       </div>
