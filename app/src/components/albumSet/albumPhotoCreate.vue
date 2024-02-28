@@ -105,7 +105,7 @@ onMounted(async () => {
             <div class="inputClean">
               <div class="input select-pi">
                 <div class="inputClean">
-                  <div class="input">
+                  <div class="input data-disable">
                     <input type="text" autocomplete="off" v-model="albumName" />
                     <div class="labelInput">
                       <label> ชื่อหมวดอัลบั้ม </label>
@@ -134,7 +134,7 @@ onMounted(async () => {
           </div>
           <div class="col pr-10">
             <div class="inputClean">
-              <div class="input">
+              <div class="input data-disable">
                 <input type="text" autocomplete="off" v-model="albumSetName" />
                 <div class="labelInput">
                   <label> ชื่ออัลบั้ม </label>
@@ -144,7 +144,7 @@ onMounted(async () => {
           </div>
           <div class="col pl-10">
             <div class="inputClean">
-              <div class="input">
+              <div class="input data-disable">
                 <input type="text" autocomplete="off" v-model="countryName" />
                 <div class="labelInput">
                   <label> ประเทศ </label>
@@ -154,7 +154,7 @@ onMounted(async () => {
           </div>
           <div class="col pl-10">
             <div class="inputClean">
-              <div class="input">
+              <div class="input data-disable">
                 <input type="text" autocomplete="off" v-model="cityName" />
                 <div class="labelInput">
                   <label> เมือง </label>
@@ -418,5 +418,9 @@ onMounted(async () => {
     }
 
   }
+}
+.data-disable {
+    pointer-events: none;
+    opacity: 0.5;
 }
 </style>

@@ -6,8 +6,18 @@ const router = createRouter({
   routes: [
     {
       path: '/',
+      name: 'albumCountry',
+      component: () => import('../views/album/albumCountryView.vue')
+    },
+    {
+      path: '/albumCity',
+      name: 'albumCity',
+      component: () => import('../components/album/albumCityView.vue')
+    },
+    {
+      path: '/album',
       name: 'album',
-      component: () => import('../views/album/albumViews.vue')
+      component: () => import('../components/album/albumView.vue')
     },
     {
       path: '/albumSet',

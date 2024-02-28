@@ -18,12 +18,10 @@ interface Photo {
 
 interface setSearch {
   countryName: string;
-  cityName: string;
 }
 
 interface setSearchShow {
   CO: string;
-  CI: string;
 }
 
 interface Album {
@@ -57,28 +55,39 @@ const router = useRouter();
 const modalDialog = useDialog();
 const isReady = ref("WARN");
 const myStore = useAlbum();
-const cModel = ref([] as iAlbumProject []);
+const cModel = ref([] as iCountryList []);
+const cModelShow = ref([] as iCountryList []);
 const countryValue = ref("");
 const cityValue = ref ("");
 const keySearch = ref("");
+const countryList = ref(myStore.countryList);
 
 const modelSearch: setSearch = reactive({
-  countryName: "",
-  cityName: "",
+  countryName: ""
 });
 
 const actions = () => {
   const ac = {
     onInit: async () => {
-        await myStore.getFolderAlbum(countryValue.value, cityValue.value)
-        cModel.value = myStore.albumProject;
+        await myStore.getCountryList();
+        countryList.value = myStore.countryList;
+        cModel.value = countryList.value;
+
+        // const getValue = (router.currentRoute.value.query as unknown) as setSearchShow;
+        // if (Object.keys(getValue).length) {
+        //     modelSearch.countryName = String(getValue.CO);
+        //     cModel.value = countryList.value.filter((o)=> {
+        //         o.countryName == modelSearch.countryName;
+        //         return o;
+        //     });
+        // }
         // await ac.getDataView();
         setTimeout(() => {
           isReady.value = "READY";
         }, 1000);
     },
-    onCreateAlbum: () =>{
-      modalDialog.open( albumCreate, {
+    onCreateCountry: () =>{
+      modalDialog.open( albumCreateCountry, {
         props: {
           closeOnEscape: true,
           rtl: false,
@@ -96,13 +105,9 @@ const actions = () => {
         templates: {
           header: () => {
             return [
-              h("div", { class: "header-dialog" }, [h("span", "เพิ่มหมวดอัลบั้ม")]),
+              h("div", { class: "header-dialog" }, [h("span", "เพิ่มประเทศ")]),
             ];
           },
-        },
-        data: {
-          countryName: countryValue.value,
-          cityName: cityValue.value
         },
         onClose: async (options) => {
           if (options?.data == true) {
@@ -121,104 +126,130 @@ const actions = () => {
         },
       });
     },
+    
   };
   return ac;
 };
 
+watch(modelSearch, async () => {
+  countryValue.value = modelSearch.countryName;
+    // await actions().getDataView();
+    // events().showData();
+});
+
 const events =() => {
     const ev = {
-      setSearch: () => {
-        var getURL = {};
-        if (countryValue.value) {
-          getURL = Object.assign({}, getURL, { CO: countryValue.value });
-        }
-        if (cityValue.value) {
-          getURL = Object.assign({}, getURL, { CI: cityValue.value });
-        }
-        router.push({
-          path: "/",
-          query: getURL,
-        });
-      },
-      clearSearch: () => {
-        console.log("IN CLEAR");
-        router.push({
-          path: "/",
-        });
-      },
-      onViewSetAlbum: (albumName: string, countryName: string, cityName: string) => {
-        router.push({
-          path: "/albumSet",
-          query: { albumName: albumName, countryName: countryName, cityName: cityName },
-        });
-      },
-      back: (countryName: string) => {
-        router.push({
-          path: "/albumCity",
-          query: { countryName: countryName }, 
-        });
-      }
+        setSearch: () => {
+            var getURL = {};
+            if (countryValue.value) {
+            getURL = Object.assign({}, getURL, { CO: countryValue.value });
+            }
+            if (cityValue.value) {
+            getURL = Object.assign({}, getURL, { CI: cityValue.value });
+            }
+            router.push({
+            path: "/",
+            query: getURL,
+            });
+        },
+        clearSearch: () => {
+            console.log("IN CLEAR");
+            router.push({
+            path: "/",
+            });
+        },
+        onViewCity: (countryName: string) => {
+            router.push({
+            path: "/albumCity",
+            query: { countryName: countryName },
+            });
+        },
+        // setFilter: async () => {
+        //     cModelShow.value = cModel.value
+        //     .filter((item) => {
+        //     const cTry = modelSearch.countryName.toLowerCase(),
+        //         cn = item.countryName.toLowerCase();
+        //     const searhcCountryName = cn.indexOf(cTry) !== -1;
+        //     return modelSearch.countryName == "All Country" ? true : searhcCountryName;
+        //     })
+        // },
+        // showData: async () => {
+        //     ev.setFilter();
+        // },
     };
   return ev;
 }
 
+// watch(modelSearch, () => {
+//   events().showData();
+// });
+
+
 onMounted(async () => {
-  countryValue.value = String(router.currentRoute.value.query.countryName);
-  cityValue.value = String(router.currentRoute.value.query.cityName);
   await actions().onInit();
 });
 </script>
 <template>
     <div >
-      <div class="text-right">
-        <button
-          class="btn-cancel p-button p-component p-button-sm p-button-rounded p-button-outlined w-150 m-10"
-          @click="events().back(countryValue)"
-          type="button"
-        >
-          <span class="p-button-label"
-            ><i class="fa-solid fa-arrow-left px-2"></i> กลับหน้าเมือง</span
-          >
-        </button>
-      </div>
       <header>
-            <h1>หมวดอัลบั้ม</h1>
+            <h1>My Photo Album</h1>
       </header>
     </div>
     <div class="document-search">
       <div class="row">
-        <div class="col-2 w-country-search">
-          <div class="inputClean">
-            <div class="input data-disable">
-              <input
-                v-model="countryValue"
-                type="text"
-                placeholder="ชื่อเมือง"
-                autocomplete="off"
-              />
-              <div class="labelInput">
-                <label><i class="pi pi-globe"></i> ประเทศ </label>
+        <!-- <div class="col-2 w-country-search">
+          <div class="box-input-search-dropdown">
+            <div class="inputClean">
+              <div class="input input-pi">
+                <Dropdown
+                  v-model="modelSearch.countryName"
+                  optionLabel="countryName"
+                  optionValue="countryName"
+                  :options="countryList"
+                  placeholder="เลือกประเทศ"
+                  :filter="true"
+                  class="p-dropdown-country"
+                >
+                  <template #value="countryList">
+                    <div v-if="countryList.value">
+                      <div>{{ countryList.value }}</div>
+                    </div>
+                    <span v-else>
+                      {{ countryList.placeholder }}
+                    </span>
+                  </template>
+                  <template #option="countryList">
+                    <div class="template-country">
+                      <div class="template-country-content">
+                        {{ countryList.option.countryName }}
+                      </div>
+                    </div>
+                  </template>
+                </Dropdown>
+                <div class="labelInput">
+                  <label><i class="pi pi-globe"></i> ประเทศ </label>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-4 w-input-search">
-          <div class="inputClean">
-            <div class="input data-disable">
-              <input
-                v-model="cityValue"
-                type="text"
-                placeholder="ชื่อเมือง"
-                autocomplete="off"
-              />
-              <div class="labelInput">
-                <label><i class="pi pi-globe"></i> เมือง </label>
-              </div>
-            </div>
+        <div class="col-auto pt-2">
+          <div class="document-search-accept">
+            <Button
+              label="Search"
+              icon="pi pi-search"
+              class="bg-search p-button-sm p-button-rounded w-100"
+              @click="events().setSearch"
+            />
           </div>
         </div>
+        <div class="w-btn-clear-search" @click="events().clearSearch">
+          <p class="text-blue clear-all cursor-pointer">
+            Clear all
+          </p>
+        </div> -->
         <div class="col w-btn-search">
-            <Button @click="actions().onCreateAlbum()">สร้างหมวด</Button>
+            <Button @click="actions().onCreateCountry()">สร้างประเทศ</Button>
           </div>
       </div>
     </div>
@@ -232,9 +263,9 @@ onMounted(async () => {
           </div>
       </div> -->
 
-      <div v-for="item in cModel" :key="item.albumName">
-        <div class="card-album cursor-pointer mt-2" @click="events().onViewSetAlbum(item.albumName, countryValue, cityValue)">
-          <p class="text-center mt-4">{{ item.albumName }}</p>
+      <div v-for="item in cModel" :key="item.countryName">
+        <div class="card-album cursor-pointer mt-2" @click="events().onViewCity(item.countryName)">
+          <p class="text-center mt-4">{{ item.countryName }}</p>
         </div>
       </div>
       </main>
@@ -326,9 +357,5 @@ div > button.bg-search:hover {
 }
 .cursor-pointer {
   cursor: pointer;
-}
-.data-disable {
-    pointer-events: none;
-    opacity: 0.5;
 }
 </style>

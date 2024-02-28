@@ -16,13 +16,12 @@ const countryValue = ref("");
 const cityName = ref("");
 const myStore = useAlbum();
 
-const cModel = ref([] as iCountryList[]);
 
 const actions = () => {
   const ac = {
     onInit: async () => {
         if (dialogRef.value.data) {
-        cModel.value = dialogRef.value.data.model;
+        countryName.value = dialogRef.value.data.countryNameValue;
       }
       setTimeout(() => {
         isReady.value = "READY";
@@ -125,6 +124,14 @@ onMounted(async () => {
           </div>
           <div class="col pl-10">
             <div class="inputClean">
+              <div class="input data-disable">
+                <input type="text" autocomplete="off" v-model="countryName" />
+                <div class="labelInput">
+                  <label> ชื่อประเทศ </label>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="inputClean">
                 <div class="input input-pi">
                   <Dropdown
                     v-model="countryName"
@@ -155,7 +162,7 @@ onMounted(async () => {
                     <label><i class="pi pi-globe"></i> ประเทศ </label>
                   </div>
                 </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -376,6 +383,10 @@ onMounted(async () => {
   h4 {
     margin: 0;
   }
+}
+.data-disable {
+    pointer-events: none;
+    opacity: 0.5;
 }
 </style>
 @/stores/album-store

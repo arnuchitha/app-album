@@ -20,7 +20,6 @@ router.afterEach((r) => {
 const events = () => {
   const ev = {
     routerToBreadCrumb: async (p: string) => {
-      console.log(p)
       const dataOptions = [...router.options.routes];
       const optionsToBreadCrumb: iBreadCrumb[] = dataOptions.map((o) => {
         const keyAndName = o.name

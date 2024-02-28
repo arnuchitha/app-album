@@ -73,9 +73,9 @@ const actions = () => {
   const ac = {
     onInit: async () => {
         await myStore.getCountryList();
-        await myStore.getCityList();
+        // await myStore.getCityList();
         countryList.value = myStore.countryList;
-        cityList.value = myStore.cityList;
+        // cityList.value = myStore.cityList;
         // await ac.getDataView();
         setTimeout(() => {
           isReady.value = "READY";

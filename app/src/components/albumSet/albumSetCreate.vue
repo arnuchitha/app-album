@@ -145,7 +145,7 @@ onMounted(async () => {
           </div>
           <div class="col pl-10">
             <div class="inputClean">
-              <div class="input">
+              <div class="input data-disable">
                 <input type="text" autocomplete="off" v-model="countryName" />
                 <div class="labelInput">
                   <label> ประเทศ </label>
@@ -155,7 +155,7 @@ onMounted(async () => {
           </div>
           <div class="col pl-10">
             <div class="inputClean">
-              <div class="input">
+              <div class="input data-disable">
                 <input type="text" autocomplete="off" v-model="cityName" />
                 <div class="labelInput">
                   <label> เมือง </label>
@@ -383,5 +383,8 @@ onMounted(async () => {
     margin: 0;
   }
 }
+.data-disable {
+    pointer-events: none;
+    opacity: 0.5;
+}
 </style>
-@/stores/album-store

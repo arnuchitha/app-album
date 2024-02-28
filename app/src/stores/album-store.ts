@@ -71,8 +71,11 @@ export const useAlbum = defineStore("useAlbum", {
           return res.data;
         });
     },
-    async getCityList () {
+    async getCityList (countryName: string) {
       this.cityList = await apis.get("/albumview/getCityList")
+        .params({
+          countryName: countryName,
+        })
         .finish()
         .then((res) => {
           return res.data;

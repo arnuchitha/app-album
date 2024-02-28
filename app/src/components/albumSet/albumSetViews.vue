@@ -130,8 +130,8 @@ const events =() => {
       },
       back: (countryName: string, cityName: string) => {
         router.push({
-          path: "/",
-          query: { CO: countryName, CI: cityName }, 
+          path: "/album",
+          query: { countryName: countryName, cityName: cityName }, 
         });
       }
     };
@@ -154,7 +154,7 @@ onMounted(async () => {
           type="button"
         >
           <span class="p-button-label"
-            ><i class="fa-solid fa-arrow-left px-2"></i> กลับหน้าหลัก</span
+            ><i class="fa-solid fa-arrow-left px-2"></i> กลับหน้าหมวด</span
           >
         </button>
       </div>
@@ -166,7 +166,7 @@ onMounted(async () => {
 
           <div class="col-4 w-input-search">
             <div class="inputClean">
-              <div class="input">
+              <div class="input data-disable">
                 <input
                   v-model="countryValue"
                   type="text"
@@ -184,7 +184,7 @@ onMounted(async () => {
 
           <div class="col-4 w-input-search">
             <div class="inputClean">
-              <div class="input">
+              <div class="input data-disable">
                 <input
                   v-model="cityValue"
                   type="text"
@@ -324,5 +324,9 @@ div > button.bg-search:hover {
 }
 .cursor-pointer {
   cursor: pointer;
+}
+.data-disable {
+    pointer-events: none;
+    opacity: 0.5;
 }
 </style>

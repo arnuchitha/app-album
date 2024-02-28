@@ -25,7 +25,14 @@ const albums = ref<Album[]>([
     photos: [
       { id: 1, url: "./src/assets/Images/Pictour/1.jpg" },
       { id: 2, url: './src/assets/Images/Pictour/2.jpg' },
-      { id: 3, url: './src/assets/Images/Pictour/3.jpg' }
+      { id: 3, url: './src/assets/Images/Pictour/3.jpg' },
+      { id: 4, url: "./src/assets/Images/Pictour/1.jpg" },
+      { id: 5, url: './src/assets/Images/Pictour/2.jpg' },
+      { id: 6, url: './src/assets/Images/Pictour/3.jpg' },
+      { id: 7, url: './src/assets/Images/Pictour/3.jpg' },
+      { id: 8, url: "./src/assets/Images/Pictour/1.jpg" },
+      { id: 9, url: './src/assets/Images/Pictour/2.jpg' },
+      { id: 10, url: './src/assets/Images/Pictour/3.jpg' }
     ]
   },
   {
