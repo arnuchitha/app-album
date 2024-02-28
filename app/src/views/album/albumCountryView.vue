@@ -117,28 +117,9 @@ const actions = () => {
 
 const events =() => {
     const ev = {
-        setSearch: () => {
-            var getURL = {};
-            if (countryValue.value) {
-            getURL = Object.assign({}, getURL, { CO: countryValue.value });
-            }
-            if (cityValue.value) {
-            getURL = Object.assign({}, getURL, { CI: cityValue.value });
-            }
-            router.push({
-            path: "/",
-            query: getURL,
-            });
-        },
-        clearSearch: () => {
-            console.log("IN CLEAR");
-            router.push({
-            path: "/",
-            });
-        },
         onViewCity: (countryName: string) => {
             router.push({
-            path: "/albumCity",
+            path: "/albumCountry/albumCity",
             query: { countryName: countryName },
             });
         },

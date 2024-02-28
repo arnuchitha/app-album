@@ -119,33 +119,15 @@ const actions = () => {
 
 const events =() => {
     const ev = {
-        setSearch: () => {
-            var getURL = {};
-            if (countryValue.value) {
-            getURL = Object.assign({}, getURL, { countryName: countryValue.value });
-            }
-            if (cityValue.value) {
-            getURL = Object.assign({}, getURL, { cityName: cityValue.value });
-            }
-            router.push({
-            path: "/albumCity",
-            query: getURL,
-            });
-        },
-        clearSearch: () => {
-            router.push({
-            path: "/",
-            });
-        },
         onViewAlbum: (countryName: string, cityName: string) => {
             router.push({
-            path: "/album",
+            path: "/albumCountry/albumCity/album",
             query: { countryName: countryName, cityName: cityName },
             });
         },
         back: () => {
           router.push({
-            path: "/", 
+            path: "/albumCountry", 
           });
         },
         setFilter: async () => {
