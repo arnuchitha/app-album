@@ -112,6 +112,7 @@ const actions = () => {
         onClose: async (options) => {
           if (options?.data == true) {
               setTimeout(() => {
+                actions().onInit();
               }, 300);
           }
           // if (options?.data) {
@@ -130,12 +131,6 @@ const actions = () => {
   };
   return ac;
 };
-
-watch(modelSearch, async () => {
-  countryValue.value = modelSearch.countryName;
-    // await actions().getDataView();
-    // events().showData();
-});
 
 const events =() => {
     const ev = {
@@ -183,7 +178,6 @@ const events =() => {
 // watch(modelSearch, () => {
 //   events().showData();
 // });
-
 
 onMounted(async () => {
   await actions().onInit();
@@ -262,7 +256,7 @@ onMounted(async () => {
           </div>
           </div>
       </div> -->
-
+      
       <div v-for="item in cModel" :key="item.countryName">
         <div class="card-album cursor-pointer mt-2" @click="events().onViewCity(item.countryName)">
           <p class="text-center mt-4">{{ item.countryName }}</p>

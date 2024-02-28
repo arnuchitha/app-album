@@ -100,6 +100,7 @@ const actions = () => {
         onClose: async (options) => {
           if (options?.data == true) {
               setTimeout(() => {
+                actions().onInit();
               }, 300);
           }
         },

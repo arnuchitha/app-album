@@ -9,9 +9,7 @@ const dialogRef = inject("dialogRef") as any;
 const confirm = useConfirm();
 const toast = useToast();
 const isReady = ref("WARN");
-const albumName = ref("");
 const countryName = ref("");
-const cityName = ref("");
 const myStore = useAlbum();
 
 const actions = () => {
@@ -27,10 +25,6 @@ const actions = () => {
 
 const events = () => {
   const ev = {
-    checkData: async () => {
-      const resInsert = await myStore.createFolder(albumName.value, countryName.value, cityName.value);
-      dialogRef.value.close(resInsert);
-    },
     cancle: () => {
       dialogRef.value.close(true);
     },

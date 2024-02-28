@@ -107,6 +107,7 @@ const actions = () => {
         onClose: async (options) => {
           if (options?.data == true) {
               setTimeout(() => {
+                actions().onInit();
               }, 300);
           }
           // if (options?.data) {
@@ -231,7 +232,7 @@ onMounted(async () => {
           </div>
           </div>
       </div> -->
-
+      
       <div v-for="item in cModel" :key="item.albumName">
         <div class="card-album cursor-pointer mt-2" @click="events().onViewSetAlbum(item.albumName, countryValue, cityValue)">
           <p class="text-center mt-4">{{ item.albumName }}</p>
