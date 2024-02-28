@@ -58,7 +58,6 @@ const goRoute = async (p: any) => {
       color: var(--inactive-color);
       .breadcrumbs-link {
         text-decoration: none;
-        color: var(--theme-color);
         border-radius: 2rem;
         padding: 2px 10px;
         -webkit-transition: 0.5s !important;
@@ -70,6 +69,9 @@ const goRoute = async (p: any) => {
       .breadcrumbs-separator {
         color: var(--ico-color-tab-active);
         margin: 0.3rem;
+      }
+      .breadcrumbs-name {
+        color: #3c3a3a;
       }
     }
   }

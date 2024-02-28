@@ -13,13 +13,13 @@ const myStore = useAlbum();
 
 router.afterEach((r) => {
   isActiveMain.value = r.path == "/" ? true : false;
-  events().routerToBreadCrumb(r.path);
+  events().routerToBreadCrumb(r.path, r.query);
   myStore.setWaitTimeDelayOnChangeRouter();
 });
 
 const events = () => {
   const ev = {
-    routerToBreadCrumb: async (p: string) => {
+    routerToBreadCrumb: async (p: string, q: string) => {
       let albumValue = String(router.currentRoute.value.query.albumName);
       let countryValue = String(router.currentRoute.value.query.countryName);
       let cityValue = String(router.currentRoute.value.query.cityName);
@@ -27,24 +27,22 @@ const events = () => {
       
       // const dataTest = [{valueP :countryValue}, {valueP : cityValue}, { valueP : albumValue}, {valueP : albumSetValue}];
       // const dataOptions1 = [...router.options.routes, ...dataTest];
-      // console.log(dataOptions1)
 
       const dataOptions = [...router.options.routes];
       const optionsToBreadCrumb: iBreadCrumb[] = dataOptions.map((o) => {
+
         const keyAndName = o.name
           ?.toString()
           .split(",")
           .filter((o) => {
             return o !== "";
           });
-        console.log(keyAndName)
         const isKey = keyAndName?.find((v, i) => {
           return i == 0;
         });
         const isName = keyAndName?.find((v, i) => {
           return i == 1;
         });
-
         const dataRouterToBreadCrumbs: iBreadCrumb = {
           key: isKey,
           name: isName ? isName : isKey,
@@ -53,6 +51,8 @@ const events = () => {
         return dataRouterToBreadCrumbs;
       });
       const originBreadCrumbs = p;
+      const originalQuery = q;
+      
       const arrBreadCrumbs: string[] = originBreadCrumbs
         .split("/")
         .filter((o) => {
@@ -70,7 +70,7 @@ const events = () => {
   <div id="app">
     <div class="layout">
       <div class="row">
-        <div class="col-auto px-4">
+        <div class="col-auto bread-padding">
           <BreadCrumbs />
         </div>
       </div>
@@ -93,6 +93,9 @@ body {
   margin-left: auto;
   margin-right: auto;
   padding: 40px 20px;
+}
+.bread-padding {
+  padding-left: 0px
 }
 </style>
 @/stores/album-store

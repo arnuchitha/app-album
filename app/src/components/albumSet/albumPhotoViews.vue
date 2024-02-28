@@ -6,6 +6,7 @@ import { useDialog } from "primevue/usedialog";
 import { useAlbum } from "@/stores/album-store";
 import albumPhotoCreate from "@/components/albumSet/albumPhotoCreate.vue";
 import type iAlbumSet from "@/interfaces/album-set";
+import type iAlbumFile from "@/interfaces/album-photo";
 
 interface Photo {
   id: number;
@@ -50,7 +51,7 @@ const router = useRouter();
 const modalDialog = useDialog();
 const isReady = ref("WARN");
 const myStore = useAlbum();
-const cModel = ref([] as iAlbumSet []);
+const cModel = ref([] as iAlbumFile []);
 const albumValue = ref("");
 const albumSetValue = ref("");
 const countryValue = ref("");
@@ -59,8 +60,8 @@ const cityValue = ref ("");
 const actions = () => {
   const ac = {
     onInit: async () => {
-        // await myStore.getFolderAlbumSet(albumValue.value, countryValue.value, cityValue.value);
-        // cModel.value = myStore.albumSet;
+        // await myStore.getAlbumPhoto(albumValue.value, countryValue.value, cityValue.value, albumSetValue.value);
+        // cModel.value = myStore.albumFile;
         // await ac.getDataView();
         setTimeout(() => {
           isReady.value = "READY";

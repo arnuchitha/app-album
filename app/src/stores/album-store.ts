@@ -175,6 +175,19 @@ export const useAlbum = defineStore("useAlbum", {
       }
       this.breadCrumbs = bcShow;
     },
+    async getAlbumPhoto (albumName: String, countryName: String, cityName: String, albumSetName: String ) {
+      this.albumFile = await apis.get("/albumview/getAlbumPhoto")
+        .params({ 
+          albumName: albumName,
+          countryNameValue: countryName, 
+          cityNameValue: cityName,
+          albumSetNameValue: albumSetName
+        })
+        .finish()
+        .then((res) => {
+          return res.data;
+        });
+    },
 
   },
 });
