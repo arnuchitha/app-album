@@ -19,6 +19,7 @@ interface Photo {
 interface setSearch {
   countryName: string;
   cityName: string;
+  keysearch: string;
 }
 
 interface setSearchShow {
@@ -58,6 +59,7 @@ const modalDialog = useDialog();
 const isReady = ref("WARN");
 const myStore = useAlbum();
 const cModel = ref([] as iAlbumProject []);
+const cModelShow = ref([] as iAlbumProject []);
 const countryValue = ref("");
 const cityValue = ref ("");
 const keySearch = ref("");
@@ -65,6 +67,7 @@ const keySearch = ref("");
 const modelSearch: setSearch = reactive({
   countryName: "",
   cityName: "",
+  keysearch: "",
 });
 
 const actions = () => {
@@ -72,7 +75,9 @@ const actions = () => {
     onInit: async () => {
         await myStore.getFolderAlbum(countryValue.value, cityValue.value)
         cModel.value = myStore.albumProject;
-        // await ac.getDataView();
+        cModelShow.value = cModel.value;
+        await events().showData();
+        
         setTimeout(() => {
           isReady.value = "READY";
         }, 1000);
@@ -110,15 +115,6 @@ const actions = () => {
                 actions().onInit();
               }, 300);
           }
-          // if (options?.data) {
-          //   if(isManager.value){
-          //     await myStore.fetchTemplatesListByAll();
-          //     collectionSet.value = myStore.listTemplates;
-          //   }else{
-          //     await myStore.fetchTemplatesListByDepartmentID(userLogin.departmentId);
-          //     collectionSet.value = myStore.listTemplates;
-          //   }
-          // }
         },
       });
     },
@@ -128,25 +124,6 @@ const actions = () => {
 
 const events =() => {
     const ev = {
-      setSearch: () => {
-        var getURL = {};
-        if (countryValue.value) {
-          getURL = Object.assign({}, getURL, { CO: countryValue.value });
-        }
-        if (cityValue.value) {
-          getURL = Object.assign({}, getURL, { CI: cityValue.value });
-        }
-        router.push({
-          path: "/",
-          query: getURL,
-        });
-      },
-      clearSearch: () => {
-        console.log("IN CLEAR");
-        router.push({
-          path: "/",
-        });
-      },
       onViewSetAlbum: (albumName: string, countryName: string, cityName: string) => {
         router.push({
           path: "/albumSet",
@@ -158,10 +135,26 @@ const events =() => {
           path: "/albumCity",
           query: { countryName: countryName }, 
         });
-      }
+      },
+      setFilter: async () => {
+        cModelShow.value = cModel.value
+            .filter((item) => {
+            const cTry = modelSearch.keysearch.toLowerCase(),
+                cn = item.albumName.toLowerCase();
+            const searhcAlbumName = cn.indexOf(cTry) !== -1;
+            return searhcAlbumName;
+            })
+        },
+        showData: async () => {
+            ev.setFilter();
+      },
     };
   return ev;
 }
+
+watch(modelSearch, () => {
+  events().showData();
+});
 
 onMounted(async () => {
   countryValue.value = String(router.currentRoute.value.query.countryName);
@@ -218,6 +211,21 @@ onMounted(async () => {
             </div>
           </div>
         </div>
+        <div class="col-4 w-input-search">
+          <div class="inputClean">
+              <div class="input">
+                <input
+                  v-model="modelSearch.keysearch"
+                  type="text"
+                  placeholder="ชื่อหมวด"
+                  autocomplete="off"
+                />
+                <div class="labelInput">
+                  <label><i class="fa-solid fa-magnifying-glass"></i> ค้นหา </label>
+                </div>
+              </div>
+            </div>
+        </div>
         <div class="col w-btn-search">
             <Button @click="actions().onCreateAlbum()">สร้างหมวด</Button>
           </div>
@@ -233,7 +241,7 @@ onMounted(async () => {
           </div>
       </div> -->
       
-      <div v-for="item in cModel" :key="item.albumName">
+      <div v-for="item in cModelShow" :key="item.albumName">
         <div class="card-album cursor-pointer mt-2" @click="events().onViewSetAlbum(item.albumName, countryValue, cityValue)">
           <p class="text-center mt-4">{{ item.albumName }}</p>
         </div>

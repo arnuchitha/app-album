@@ -72,16 +72,8 @@ const actions = () => {
         await myStore.getCountryList();
         countryList.value = myStore.countryList;
         cModel.value = countryList.value;
+        await events().showData();
 
-        // const getValue = (router.currentRoute.value.query as unknown) as setSearchShow;
-        // if (Object.keys(getValue).length) {
-        //     modelSearch.countryName = String(getValue.CO);
-        //     cModel.value = countryList.value.filter((o)=> {
-        //         o.countryName == modelSearch.countryName;
-        //         return o;
-        //     });
-        // }
-        // await ac.getDataView();
         setTimeout(() => {
           isReady.value = "READY";
         }, 1000);
@@ -115,15 +107,6 @@ const actions = () => {
                 actions().onInit();
               }, 300);
           }
-          // if (options?.data) {
-          //   if(isManager.value){
-          //     await myStore.fetchTemplatesListByAll();
-          //     collectionSet.value = myStore.listTemplates;
-          //   }else{
-          //     await myStore.fetchTemplatesListByDepartmentID(userLogin.departmentId);
-          //     collectionSet.value = myStore.listTemplates;
-          //   }
-          // }
         },
       });
     },
@@ -159,25 +142,25 @@ const events =() => {
             query: { countryName: countryName },
             });
         },
-        // setFilter: async () => {
-        //     cModelShow.value = cModel.value
-        //     .filter((item) => {
-        //     const cTry = modelSearch.countryName.toLowerCase(),
-        //         cn = item.countryName.toLowerCase();
-        //     const searhcCountryName = cn.indexOf(cTry) !== -1;
-        //     return modelSearch.countryName == "All Country" ? true : searhcCountryName;
-        //     })
-        // },
-        // showData: async () => {
-        //     ev.setFilter();
-        // },
+        setFilter: async () => {
+            cModel.value = countryList.value
+            .filter((item) => {
+            const cTry = modelSearch.countryName.toLowerCase(),
+                cn = item.countryName.toLowerCase();
+            const searhcCountryName = cn.indexOf(cTry) !== -1;
+            return searhcCountryName;
+            })
+        },
+        showData: async () => {
+            ev.setFilter();
+        },
     };
   return ev;
 }
 
-// watch(modelSearch, () => {
-//   events().showData();
-// });
+watch(modelSearch, () => {
+  events().showData();
+});
 
 onMounted(async () => {
   await actions().onInit();
@@ -191,57 +174,23 @@ onMounted(async () => {
     </div>
     <div class="document-search">
       <div class="row">
-        <!-- <div class="col-2 w-country-search">
+        <div class="col-2 w-country-search">
           <div class="box-input-search-dropdown">
             <div class="inputClean">
-              <div class="input input-pi">
-                <Dropdown
+              <div class="input">
+                <input
                   v-model="modelSearch.countryName"
-                  optionLabel="countryName"
-                  optionValue="countryName"
-                  :options="countryList"
-                  placeholder="เลือกประเทศ"
-                  :filter="true"
-                  class="p-dropdown-country"
-                >
-                  <template #value="countryList">
-                    <div v-if="countryList.value">
-                      <div>{{ countryList.value }}</div>
-                    </div>
-                    <span v-else>
-                      {{ countryList.placeholder }}
-                    </span>
-                  </template>
-                  <template #option="countryList">
-                    <div class="template-country">
-                      <div class="template-country-content">
-                        {{ countryList.option.countryName }}
-                      </div>
-                    </div>
-                  </template>
-                </Dropdown>
+                  type="text"
+                  placeholder="ชื่อประเทศ"
+                  autocomplete="off"
+                />
                 <div class="labelInput">
-                  <label><i class="pi pi-globe"></i> ประเทศ </label>
+                  <label><i class="fa-solid fa-magnifying-glass"></i> ค้นหา </label>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-auto pt-2">
-          <div class="document-search-accept">
-            <Button
-              label="Search"
-              icon="pi pi-search"
-              class="bg-search p-button-sm p-button-rounded w-100"
-              @click="events().setSearch"
-            />
-          </div>
-        </div>
-        <div class="w-btn-clear-search" @click="events().clearSearch">
-          <p class="text-blue clear-all cursor-pointer">
-            Clear all
-          </p>
-        </div> -->
         <div class="col w-btn-search">
             <Button @click="actions().onCreateCountry()">สร้างประเทศ</Button>
           </div>

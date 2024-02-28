@@ -88,24 +88,6 @@ onMounted(async () => {
         <div class="row" style="margin-top: -60px !important">
           <div class="col">
           </div>
-          <div class="col pl-10">
-            <div class="inputClean">
-              <div class="input select-pi">
-                <!-- <Dropdown class="cursor-pointer" v-dropdownenter :options="departmentList" optionValue="departmentId"
-                  optionLabel="nameLocal" v-model="cModel.masterTemplate.departmentId">
-                  <template #option="slotProps">
-                    <div class="drop-down-basic-item">
-                      <i class="fa-solid fa-file"></i>
-                      <div>{{ slotProps.option.nameLocal }}</div>
-                    </div>
-                  </template>
-                </Dropdown> -->
-                <div class="labelInput">
-                  <label> ประเภทหมวด </label>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
       <div class="col-1"></div>

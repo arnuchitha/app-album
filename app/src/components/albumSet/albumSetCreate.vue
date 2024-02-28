@@ -105,7 +105,7 @@ onMounted(async () => {
             <div class="inputClean">
               <div class="input select-pi">
                 <div class="inputClean">
-                  <div class="input">
+                  <div class="input data-disable">
                     <input type="text" autocomplete="off" v-model="albumName" />
                     <div class="labelInput">
                       <label> ชื่อหมวดอัลบั้ม </label>

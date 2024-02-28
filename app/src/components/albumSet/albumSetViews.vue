@@ -15,6 +15,7 @@ interface Photo {
 interface setSearch {
   countryName: string;
   cityName: string;
+  keysearch: string;
 }
 
 interface setSearchShow {
@@ -49,25 +50,33 @@ const albums = ref<Album[]>([
   }
 ]);
 
+
 const router = useRouter();
 const modalDialog = useDialog();
 const isReady = ref("WARN");
 const myStore = useAlbum();
 const cModel = ref([] as iAlbumSet []);
+const cModelShow = ref([] as iAlbumSet []);
 const albumValue = ref("");
 const countryValue = ref("");
 const cityValue = ref ("");
 const keySearch = ref("");
 const countryList = ref(myStore.countryList);
 
+const modelSearch: setSearch = reactive({
+  countryName: "",
+  cityName: "",
+  keysearch: "",
+});
+
 const actions = () => {
   const ac = {
     onInit: async () => {
-        await myStore.getCountryList();
-        countryList.value = myStore.countryList;
         await myStore.getFolderAlbumSet(albumValue.value, countryValue.value, cityValue.value);
         cModel.value = myStore.albumSet;
-        // await ac.getDataView();
+        cModelShow.value = cModel.value;
+        await events().showData();
+
         setTimeout(() => {
           isReady.value = "READY";
         }, 1000);
@@ -117,12 +126,6 @@ const actions = () => {
 
 const events =() => {
     const ev = {
-      setSearch: () => {
-        
-      },
-      clearSearch: () => {
-        
-      },
       onViewAlbumPhoto: (albumName: string, countryName: string, cityName: string, albumSetName: string) => {
         router.push({
           path: "/albumPhoto",
@@ -134,10 +137,26 @@ const events =() => {
           path: "/album",
           query: { countryName: countryName, cityName: cityName }, 
         });
-      }
+      },
+      setFilter: async () => {
+        cModelShow.value = cModel.value
+            .filter((item) => {
+            const cTry = modelSearch.keysearch.toLowerCase(),
+                cn = item.albumSetName.toLowerCase();
+            const searhcAlbumSetName = cn.indexOf(cTry) !== -1;
+            return searhcAlbumSetName;
+            })
+        },
+        showData: async () => {
+            ev.setFilter();
+      },
     };
   return ev;
 }
+
+watch(modelSearch, () => {
+  events().showData();
+});
 
 onMounted(async () => {
     albumValue.value = String(router.currentRoute.value.query.albumName);
@@ -180,9 +199,6 @@ onMounted(async () => {
               </div>
             </div>
           </div>
-
-
-
           <div class="col-4 w-input-search">
             <div class="inputClean">
               <div class="input data-disable">
@@ -202,9 +218,9 @@ onMounted(async () => {
             <div class="inputClean">
               <div class="input">
                 <input
-                  v-model="keySearch"
+                  v-model="modelSearch.keysearch"
                   type="text"
-                  placeholder="ชื่อหมวด"
+                  placeholder="ชื่ออัลบั้ม"
                   autocomplete="off"
                 />
                 <div class="labelInput">
@@ -230,7 +246,7 @@ onMounted(async () => {
             </div>
             </div>
         </div> -->
-        <div v-for="item in cModel" :key="item.albumSetName">
+        <div v-for="item in cModelShow" :key="item.albumSetName">
           <div class="card-album cursor-pointer mt-2" @click="events().onViewAlbumPhoto(albumValue, countryValue, cityValue, item.albumSetName)">
             <p class="text-center mt-4">{{ item.albumSetName }}</p>
           </div>

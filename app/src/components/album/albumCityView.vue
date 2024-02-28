@@ -72,16 +72,8 @@ const actions = () => {
         await myStore.getCityList(countryValue.value);
         cityList.value = myStore.cityList;
         cModel.value = cityList.value;
+        await events().showData();
 
-        // const getValue = (router.currentRoute.value.query as unknown) as setSearchShow;
-        // if (Object.keys(getValue).length) {
-        //     modelSearch.cityName = String(getValue.cityName);
-        //     cModel.value = cityList.value.filter((o)=> {
-        //         modelSearch.cityName == o.cityName
-        //     });
-        // }
-
-        // await ac.getDataView();
         setTimeout(() => {
           isReady.value = "READY";
         }, 1000);
@@ -125,12 +117,6 @@ const actions = () => {
   return ac;
 };
 
-watch(modelSearch, async () => {
-  cityValue.value = modelSearch.cityName;
-    // await actions().getDataView();
-    // events().showData();
-});
-
 const events =() => {
     const ev = {
         setSearch: () => {
@@ -162,25 +148,25 @@ const events =() => {
             path: "/", 
           });
         },
-        // setFilter: async () => {
-        //     cModelShow.value = cModel.value
-        //     .filter((item) => {
-        //     const cTry = modelSearch.countryName.toLowerCase(),
-        //         cn = item.countryName.toLowerCase();
-        //     const searhcCountryName = cn.indexOf(cTry) !== -1;
-        //     return modelSearch.countryName == "All Country" ? true : searhcCountryName;
-        //     })
-        // },
-        // showData: async () => {
-        //     ev.setFilter();
-        // },
+        setFilter: async () => {
+            cModel.value = cityList.value
+            .filter((item) => {
+            const cTry = modelSearch.cityName.toLowerCase(),
+                cn = item.cityName.toLowerCase();
+            const searhcCityName = cn.indexOf(cTry) !== -1;
+            return searhcCityName;
+            })
+        },
+        showData: async () => {
+            ev.setFilter();
+        },
     };
   return ev;
 }
 
-// watch(modelSearch, () => {
-//   events().showData();
-// });
+watch(modelSearch, () => {
+  events().showData();
+});
 
 
 onMounted(async () => {
@@ -207,57 +193,23 @@ onMounted(async () => {
     </div>
     <div class="document-search">
       <div class="row">
-        <!-- <div class="col-2 w-country-search">
+        <div class="col-2 w-country-search">
           <div class="box-input-search-dropdown">
             <div class="inputClean">
-                <div class="input input-pi">
-                <Dropdown
-                    v-model="modelSearch.cityName"
-                    optionLabel="cityName"
-                    optionValue="cityName"
-                    :options="cityList"
-                    placeholder="เลือกเมือง"
-                    :filter="true"
-                    class="p-dropdown-country"
-                >
-                    <template #value="cityList">
-                    <div v-if="cityList.value">
-                        <div>{{ cityList.value }}</div>
-                    </div>
-                    <span v-else>
-                        {{ cityList.placeholder }}
-                    </span>
-                    </template>
-                    <template #option="cityList">
-                    <div class="template-country">
-                        <div class="template-country-content">
-                        {{ cityList.option.cityName }}
-                        </div>
-                    </div>
-                    </template>
-                </Dropdown>
+              <div class="input">
+                <input
+                  v-model="modelSearch.cityName"
+                  type="text"
+                  placeholder="ชื่อเมือง"
+                  autocomplete="off"
+                />
                 <div class="labelInput">
-                    <label><i class="pi pi-globe"></i> เมือง </label>
+                  <label><i class="fa-solid fa-magnifying-glass"></i> ค้นหา </label>
                 </div>
-                </div>
+              </div>
             </div>
           </div>
         </div>
-        <div class="col-auto pt-2">
-          <div class="document-search-accept">
-            <Button
-              label="Search"
-              icon="pi pi-search"
-              class="bg-search p-button-sm p-button-rounded w-100"
-              @click="events().setSearch"
-            />
-          </div>
-        </div>
-        <div class="w-btn-clear-search" @click="events().clearSearch">
-          <p class="text-blue clear-all cursor-pointer">
-            Clear all
-          </p>
-        </div> -->
         <div class="col w-btn-search">
             <Button @click="actions().onCreateCity()">สร้างเมือง</Button>
           </div>
