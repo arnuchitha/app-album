@@ -128,6 +128,12 @@ const events =() => {
           query: { albumName: albumName, countryName: countryName, cityName: cityName, albumSetName: albumSetName },
         });
       },
+      back: (countryName: string, cityName: string) => {
+        router.push({
+          path: "/",
+          query: { CO: countryName, CI: cityName }, 
+        });
+      }
     };
   return ev;
 }
@@ -141,6 +147,17 @@ onMounted(async () => {
 </script>
 <template>
     <div>
+      <div class="text-right">
+        <button
+          class="btn-cancel p-button p-component p-button-sm p-button-rounded p-button-outlined w-150 m-10"
+          @click="events().back(countryValue, cityValue)"
+          type="button"
+        >
+          <span class="p-button-label"
+            ><i class="fa-solid fa-arrow-left px-2"></i> กลับหน้าหลัก</span
+          >
+        </button>
+      </div>
       <header>
             <h1>{{ albumValue }}</h1>
         </header>

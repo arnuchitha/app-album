@@ -76,7 +76,6 @@ const actions = () => {
         await myStore.getCityList();
         countryList.value = myStore.countryList;
         cityList.value = myStore.cityList;
-        console.log(cityList.value)
         // await ac.getDataView();
         setTimeout(() => {
           isReady.value = "READY";
@@ -263,7 +262,7 @@ const events =() => {
       },
       onViewSetAlbum: (albumName: string, countryName: string, cityName: string) => {
         router.push({
-          path: "/albumset",
+          path: "/albumSet",
           query: { albumName: albumName, countryName: countryName, cityName: cityName },
         });
       },

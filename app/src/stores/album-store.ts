@@ -8,6 +8,7 @@ import type iCountryList from "@/interfaces/country-list";
 import type iCityList from "@/interfaces/cityList";
 import type iAlbumSet from "@/interfaces/album-set";
 import type iAlbumFile from "@/interfaces/album-photo";
+import type iBreadCrumb from "@/interfaces/bread-crumb";
 
 const _BASE_URL = import.meta.env.VITE_BASE_URL_APIS;
 
@@ -21,6 +22,7 @@ interface iState {
   isTimeOnDelay: number;
   albumSet: iAlbumSet[];
   albumFile: iAlbumFile[];
+  breadCrumbs: iBreadCrumb[];
 }
 export const useAlbum = defineStore("useAlbum", {
   state: (): iState => ({
@@ -29,12 +31,16 @@ export const useAlbum = defineStore("useAlbum", {
     cityList: [],
     albumSet: [],
     albumFile: [],
+    breadCrumbs: [],
     isDelayPage: false,
     isTimeOnDelay: 300,
   }),
   getters: {
     getDelayPage(state) {
       return state.isDelayPage;
+    },
+    getBreadCrums(state) {
+      return state.breadCrumbs;
     },
   },
   actions: {
@@ -69,7 +75,6 @@ export const useAlbum = defineStore("useAlbum", {
       this.cityList = await apis.get("/albumview/getCityList")
         .finish()
         .then((res) => {
-          console.log(res.data)
           return res.data;
         });
     },
@@ -146,6 +151,26 @@ export const useAlbum = defineStore("useAlbum", {
       };
       await apis.post("/albumview/createFolderCity").data(data).finish();
       return true;
+    },
+    async fetchBreadCrumbIni(v: string[], vOptions: iBreadCrumb[]) {
+      const bcShow: iBreadCrumb[] = [];
+      let indexvOption = 0;
+      for (const i of v) {
+        const valueOption = vOptions?.filter((o, i) => {
+          return i > indexvOption && o.key != "";
+        });
+        const bcobject: undefined | iBreadCrumb = valueOption?.find(
+          (o) => o.key == i
+        );
+        indexvOption = vOptions?.findIndex((o) => o.key == i);
+        if (bcobject) {
+          bcShow.push(bcobject);
+        } else {
+          const bcobject: undefined | iBreadCrumb = { name: i, url: i, key: i };
+          bcShow.push(bcobject);
+        }
+      }
+      this.breadCrumbs = bcShow;
     },
 
   },

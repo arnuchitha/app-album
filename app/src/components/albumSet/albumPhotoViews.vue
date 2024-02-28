@@ -23,7 +23,7 @@ const albums = ref<Album[]>([
     id: 1,
     name: 'Travel',
     photos: [
-      { id: 1, url: './src/assets/Images/Pictour/1.jpg' },
+      { id: 1, url: "./src/assets/Images/Pictour/1.jpg" },
       { id: 2, url: './src/assets/Images/Pictour/2.jpg' },
       { id: 3, url: './src/assets/Images/Pictour/3.jpg' }
     ]
@@ -110,6 +110,12 @@ const events =() => {
       clearSearch: () => {
         
       },
+      back: (albumName: string, countryName: string, cityName: string) => {
+        router.push({
+          path: "/albumSet",
+          query: {albumName: albumName, countryName: countryName, cityName: cityName }, 
+        });
+      }
     };
   return ev;
 }
@@ -124,6 +130,17 @@ onMounted(async () => {
 </script>
 <template>
     <div>
+      <div class="text-right">
+        <button
+          class="btn-cancel p-button p-component p-button-sm p-button-rounded p-button-outlined w-150 m-10"
+          @click="events().back(albumValue, countryValue, cityValue)"
+          type="button"
+        >
+          <span class="p-button-label"
+            ><i class="fa-solid fa-arrow-left px-2"></i> กลับหน้าสร้างอัลบั้ม</span
+          >
+        </button>
+      </div>
         <header>
             <h1>{{ albumSetValue }}</h1>
         </header>
