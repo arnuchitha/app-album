@@ -39,10 +39,6 @@ const actions = () => {
 
 const events = () => {
   const ev = {
-    checkData: async () => {
-      const resInsert = await myStore.createAlbumSet(albumName.value, countryName.value, cityName.value, albumSetName.value);
-      dialogRef.value.close(resInsert);
-    },
     cancle: () => {
       dialogRef.value.close(true);
     },

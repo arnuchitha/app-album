@@ -5,6 +5,11 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
+      path: '/',
+      name: 'main',
+      component: () => import('../views/album/albumCountryView.vue')
+    },
+    {
       path: '/albumCountry',
       name: 'albumCountry',
       component: () => import('../views/album/albumCountryView.vue')

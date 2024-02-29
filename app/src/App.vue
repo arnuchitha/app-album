@@ -13,13 +13,13 @@ const myStore = useAlbum();
 
 router.afterEach((r) => {
   isActiveMain.value = r.path == "/" ? true : false;
-  events().routerToBreadCrumb(r.path, r.query);
+  events().routerToBreadCrumb(r.path);
   myStore.setWaitTimeDelayOnChangeRouter();
 });
 
 const events = () => {
   const ev = {
-    routerToBreadCrumb: async (p: string, q: string) => {
+    routerToBreadCrumb: async (p: string) => {
       let albumValue = String(router.currentRoute.value.query.albumName);
       let countryValue = String(router.currentRoute.value.query.countryName);
       let cityValue = String(router.currentRoute.value.query.cityName);
@@ -51,7 +51,6 @@ const events = () => {
         return dataRouterToBreadCrumbs;
       });
       const originBreadCrumbs = p;
-      const originalQuery = q;
       
       const arrBreadCrumbs: string[] = originBreadCrumbs
         .split("/")
