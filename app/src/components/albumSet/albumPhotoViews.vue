@@ -121,7 +121,7 @@ const events =() => {
       },
       back: (albumName: string, countryName: string, cityName: string) => {
         router.push({
-          path: "/albumSet",
+          path: "/albumCountry/albumCity/album/albumSet",
           query: {albumName: albumName, countryName: countryName, cityName: cityName }, 
         });
       }
