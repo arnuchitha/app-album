@@ -97,25 +97,25 @@ const onRemoveTemplatingFile = (file: any, removeFileCallback: Function, index: 
     totalSizePercent.value = totalSize.value / 10;
 }
 
-const onRemoveFile = (id: number) => {
-    fileModel.value = fileModel.value.map(fm => {
-        if (fm.albumFileID == id) {
-            fm.isVisible = 0;
-        }
-        return fm;
-    });
-}
+// const onRemoveFile = (id: number) => {
+//     fileModel.value = fileModel.value.map(fm => {
+//         if (fm.albumFileID == id) {
+//             fm.isVisible = 0;
+//         }
+//         return fm;
+//     });
+// }
 
-const onRemoveFileAll = () => {
-    fileModel.value = fileModel.value.map(fm => {
-        fm.isVisible = 0;
-        return fm;
-    });
-}
+// const onRemoveFileAll = () => {
+//     fileModel.value = fileModel.value.map(fm => {
+//         fm.isVisible = 0;
+//         return fm;
+//     });
+// }
 
-const fileShow = computed(() => {
-    return fileModel.value.filter(fm => fm.isVisible == 1 && fm.albumFileID > 0)
-});
+// const fileShow = computed(() => {
+//     return fileModel.value.filter(fm => fm.isVisible == 1 && fm.albumFileID > 0)
+// });
 
 const checkTypeFile = (str: string) => {
     if (str == 'image/jpeg' || str == 'image/jpg' || str == 'image/png' || str == 'image/gif') {
@@ -127,7 +127,7 @@ const checkTypeFile = (str: string) => {
 </script>
 <template>
     <Toast />
-    <FileUpload name="demo[]" :multiple="true" @select="onSelectedFiles">
+    <!-- <FileUpload name="demo[]" :multiple="true" @select="onSelectedFiles">
         <template #header="{ chooseCallback, clearCallback, files }">
             <div class="row mt-0 mb-4">
                 <div class="col"></div>
@@ -198,7 +198,7 @@ const checkTypeFile = (str: string) => {
                 </div>
             </div>    
         </template>
-    </FileUpload>
+    </FileUpload> -->
 </template>
 <style lang="scss" scoped>
 .mt-70 {

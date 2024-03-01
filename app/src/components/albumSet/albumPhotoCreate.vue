@@ -19,6 +19,8 @@ const cityName = ref("");
 const myStore = useAlbum();
 const cModel = ref([] as iAlbumFile [])
 const uploadedFiles = ref({});
+const countFilesSelected = ref(0);
+const files = ref();
 
 const actions = () => {
   const ac = {
@@ -72,10 +74,41 @@ const events = () => {
         dialogRef.value.close(resInsert);
       }, 300);
     },
-    onAdvancedUpload: (item: any) => {
-        console.log(item)
-        // toast.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000 });
-    },
+    onSelectedFiles: (event: any) => {
+    if (countFilesSelected.value < event.files.length) {
+        const countAddFiles = event.files.length - countFilesSelected.value;
+        for (var i = 1; i <= countAddFiles; i++) {
+            let lastFile = event.files[event.files.length - i];
+            if (lastFile.size > 5000000) {
+                toast.add({
+                    severity: "warn",
+                    summary: "File size limit",
+                    detail: "ไฟล์มีขนาดใหญ่เกิน 5Mb.",
+                    life: 3000,
+                });
+                event.files.pop();
+                return;
+            } else {
+                let finalLastFile = new File([lastFile], lastFile.name, { type: lastFile.type });
+                if (finalLastFile) {
+                    event.files[event.files.length - i] = finalLastFile;
+                    files.value = event.files;
+                    let fileSET = {
+                        albumFileName: lastFile.name,
+                        albumFileType: lastFile.type,
+                        albumFileSize: lastFile.size,
+                        albumFileUpload: event.files[event.files.length - i],
+                    }
+                    cModel.value.push(fileSET);
+                }
+            }
+        }
+        if (countAddFiles) {
+            countFilesSelected.value = event.files.length;
+        }
+    }
+
+    }
   };
   return ev;
 };
@@ -101,8 +134,8 @@ const checkTypeFile = (str: string) => {
 }
 
 const onRemoveTemplatingFile = (file: any, removeFileCallback: Function, index: number) => {
-    // fileModel.value = fileModel.value.filter(fm => fm.albumFileName != file.name);
-    // countFilesSelected.value = countFilesSelected.value - 1;
+    cModel.value = cModel.value.filter(fm => fm.albumFileName != file.name);
+    countFilesSelected.value = countFilesSelected.value - 1;
     removeFileCallback(index);
     // totalSize.value -= parseInt(formatSize(file.size));
     // totalSizePercent.value = totalSize.value / 10;
@@ -190,10 +223,15 @@ onMounted(async () => {
         </div>
         <div class="border-eff mt-3 mb-0"></div>
         <div class="row">
-            <!-- <div class="card">
-                <Toast />
-                <FileUpload 
-                    name="demo[]" url="/api/upload" 
+          <div class="col-12">
+            <div class="box-title-sub"><h4><i class="fa-solid fa-circle-check title-icon"></i> ไฟล์แนบ</h4></div>
+          </div>
+          <div class="col-12 height-bottom">
+
+            <!-- <UploadFilesComponent v-model:model="cModel" /> -->
+            <!-- <FileUpload 
+                    name="demo[]"
+                    url="/api/upload"
                     @upload="events().onAdvancedUpload($event)" 
                     :multiple="true" 
                     accept="image/*" 
@@ -202,27 +240,9 @@ onMounted(async () => {
                     cancel-label="ลบทั้งหมด"
                     upload-label="อัปโหลด"
                 >
-                </FileUpload>
-            </div> -->
-          <div class="col-12">
-            <div class="box-title-sub"><h4><i class="fa-solid fa-circle-check title-icon"></i> ไฟล์แนบ</h4></div>
-          </div>
-          <div class="col-12 height-bottom">
+            </FileUpload> -->
 
-            <!-- <UploadFilesComponent v-model:model="cModel" /> -->
-            <FileUpload 
-                    name="demo[]" url="/api/upload" 
-                    @click="events().onAdvancedUpload($event)" 
-                    :multiple="true" 
-                    accept="image/*" 
-                    :maxFileSize="1000000"
-                    choose-label="เลือกรูป"
-                    cancel-label="ลบทั้งหมด"
-                    upload-label="อัปโหลด"
-                >
-            </FileUpload>
-
-            <!-- <FileUpload name="demo[]" url="/api/upload" :multiple="true" @upload="events().onAdvancedUpload($event)">
+            <FileUpload name="demo[]" url="/api/upload" :multiple="true" @select="events().onSelectedFiles">
               <template #header="{ chooseCallback, clearCallback, files }">
                   <div class="row mt-0 mb-4">
                       <div class="col"></div>
@@ -271,7 +291,7 @@ onMounted(async () => {
                       </div>
                   </div>    
               </template>
-          </FileUpload> -->
+          </FileUpload>
           </div>
         </div>
       </div>

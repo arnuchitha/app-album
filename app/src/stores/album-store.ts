@@ -113,18 +113,20 @@ export const useAlbum = defineStore("useAlbum", {
       this.albumFile = obj;
       if (this.albumFile.length) {
         const formData = new FormData();
+
         for (let i = 0; i < this.albumFile.length; i++) {
           if (this.albumFile[i].albumFileUpload) {
             formData.append('fileuploads', this.albumFile[i].albumFileUpload);
           }
         }
-        axios.post(_BASE_URL + 'albumview/uploadAlbumSet', formData, {
-          headers: { 'Content-Type': 'application/json' },
-        }).then((o) => {
-          console.log(o);
-        }).catch((e) => {
-          console.log(e);
-        });
+
+        // axios.post(_BASE_URL + 'albumview/uploadAlbumSet', formData, {
+        //   headers: { 'Content-Type': 'multipart/form-data' },
+        // }).then((o) => {
+        //   console.log(o);
+        // }).catch((e) => {
+        //   console.log(e);
+        // });
 
         const data = {
           albumName: albumName,
@@ -132,11 +134,13 @@ export const useAlbum = defineStore("useAlbum", {
           cityName: cityName,
           albumSetName: albumSetName,
           fileAlbum : this.albumFile,
-          fileUpload : formData,
         };
         await apis.post("/albumview/albumSetForUpload")
         .data(data)
-        .finish();
+        .finish()
+        .then((res) => {
+          axios.post(_BASE_URL + 'albumview/uploadAlbumSet', formData, {});
+        });
         return true;
       }
     },
