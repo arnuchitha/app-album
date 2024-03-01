@@ -135,12 +135,12 @@ export const useAlbum = defineStore("useAlbum", {
           albumSetName: albumSetName,
           fileAlbum : this.albumFile,
         };
-        await apis.post("/albumview/albumSetForUpload")
-        .data(data)
-        .finish()
-        .then((res) => {
-          axios.post(_BASE_URL + 'albumview/uploadAlbumSet', formData, {});
-        });
+          await apis.post("/albumview/albumSetForUpload")
+          .data(data)
+          .finish()
+          .then((res) => {
+            axios.post(_BASE_URL + 'albumview/uploadAlbumSet', formData, {});
+          });
         return true;
       }
     },
