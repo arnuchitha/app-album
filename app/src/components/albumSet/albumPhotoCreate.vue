@@ -98,6 +98,7 @@ const events = () => {
                         albumFileType: lastFile.type,
                         albumFileSize: lastFile.size,
                         albumFileUpload: event.files[event.files.length - i],
+                        albumFilePath : '',
                     }
                     cModel.value.push(fileSET);
                 }

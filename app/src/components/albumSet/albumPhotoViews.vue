@@ -64,7 +64,6 @@ const actions = () => {
     onInit: async () => {
         await myStore.getAlbumPhoto(albumValue.value, countryValue.value, cityValue.value, albumSetValue.value);
         cModel.value = myStore.albumFile;
-        pathPhoto.value = fileURL + "/" + countryValue.value + "/" + cityValue.value + "/" + albumValue.value + "/" + albumSetValue.value;
         // await ac.getDataView();
         setTimeout(() => {
           isReady.value = "READY";
@@ -166,9 +165,8 @@ onMounted(async () => {
         <main>
         <div>
             <div>
-            <!-- <h2>{{ album.name }}</h2> -->
             <div class="album-photos">
-                <img v-for="album in cModel" :key="album.albumFileName" :src="(album.albumFileName)" alt="Photo">
+                <img v-for="album in cModel" :key="album.albumFileName" :src="album.albumFilePath" alt="Photo">
             </div>
             </div>
         </div>

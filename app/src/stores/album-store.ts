@@ -138,7 +138,7 @@ export const useAlbum = defineStore("useAlbum", {
           await apis.post("/albumview/albumSetForUpload")
           .data(data)
           .finish()
-          .then((res) => {
+          .then(() => {
             axios.post(_BASE_URL + 'albumview/uploadAlbumSet', formData, {});
           });
         return true;

@@ -3,5 +3,6 @@ export default interface iAlbumFile {
     albumFileType: string;
     albumFileSize: number;
     albumFileUpload: string;
+    albumFilePath: string;
 }
   
