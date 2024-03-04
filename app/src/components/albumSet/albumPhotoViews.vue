@@ -7,6 +7,8 @@ import { useAlbum } from "@/stores/album-store";
 import albumPhotoCreate from "@/components/albumSet/albumPhotoCreate.vue";
 import type iAlbumFile from "@/interfaces/album-photo";
 
+const _BASE_URL_IMG = import.meta.env.VITE_BASE_URL_IMG;
+
 const router = useRouter();
 const modalDialog = useDialog();
 const isReady = ref("WARN");
@@ -16,12 +18,14 @@ const albumValue = ref("");
 const albumSetValue = ref("");
 const countryValue = ref("");
 const cityValue = ref ("");
+const pathFile = ref("");
 
 const actions = () => {
   const ac = {
     onInit: async () => {
         await myStore.getAlbumPhoto(albumValue.value, countryValue.value, cityValue.value, albumSetValue.value);
         cModel.value = myStore.albumFile;
+        pathFile.value = _BASE_URL_IMG + countryValue.value + "/" + cityValue.value + "/" + albumValue.value + "/" + albumSetValue.value + "/";
         setTimeout(() => {
           isReady.value = "READY";
         }, 1000);
@@ -115,7 +119,7 @@ onMounted(async () => {
         <div>
             <div>
             <div class="album-photos">
-                <img v-for="album in cModel" :key="album.albumFileName" :src="album.albumFilePath" alt="Photo">
+                <img v-for="album in cModel" :key="album.albumFileName" :src="pathFile + album.albumFileName" alt="Photo">
             </div>
             </div>
         </div>
