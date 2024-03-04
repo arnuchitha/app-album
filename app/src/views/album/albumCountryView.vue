@@ -4,16 +4,13 @@ import { computed, onMounted, reactive, ref, inject, h, watch, toRaw } from "vue
 import { useRouter } from "vue-router";
 import { useDialog } from "primevue/usedialog";
 import { useAlbum } from "@/stores/album-store";
-import albumCreate from "@/components/album/albumCreate.vue";
 import albumCreateCountry from "@/components/album/albumCountry.vue"
-import albumCreateCity from "@/components/album/albumCity.vue"
-import type iAlbumProject from "@/interfaces/album-project";
 import type iCountryList from "@/interfaces/country-list";
-import type iCityList from "@/interfaces/cityList"
 
 interface setSearch {
   countryName: string;
 }
+
 
 const router = useRouter();
 const modalDialog = useDialog();
@@ -138,6 +135,14 @@ onMounted(async () => {
       </div>
     </div>
       <main>
+      <!-- <div>
+          <div v-for="album in albums" :key="album.id">
+          <h2>{{ album.name }}</h2>
+          <div class="album-photos">
+              <img v-for="photo in album.photos" :key="photo.id" :src="photo.url" alt="Photo">
+          </div>
+          </div>
+      </div> -->
       
       <div v-for="item in cModel" :key="item.countryName">
         <div class="card-album cursor-pointer mt-2" @click="events().onViewCity(item.countryName)">

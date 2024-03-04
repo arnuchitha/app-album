@@ -3,9 +3,22 @@ import { computed, onMounted, reactive, ref, inject, h, watch, toRaw } from "vue
 import { useAlbum } from "@/stores/album-store";
 import { useRouter } from "vue-router";
 const router = useRouter();
+const albumValue = ref("");
+const countryValue = ref("");
+const cityValue = ref("");
+const albumSetValue = ref("");
 const goRoute = async (p: any) => {
   if (p) {
-    await router.push(p);
+    albumValue.value = String(!router.currentRoute.value.query.albumName ? "": router.currentRoute.value.query.albumName);
+    countryValue.value = String(!router.currentRoute.value.query.countryName? "": router.currentRoute.value.query.countryName);
+    cityValue.value = String(!router.currentRoute.value.query.cityName? "": router.currentRoute.value.query.cityName);
+    albumSetValue.value = String(!router.currentRoute.value.query.albumSetName? "": router.currentRoute.value.query.albumSetName);
+    
+    await router
+   .push({ 
+      path :p, 
+      query : {albumName: albumValue.value, countryName: countryValue.value, cityName: cityValue.value, albumSetName: albumSetValue.value }
+  });
   }
 };
 </script>

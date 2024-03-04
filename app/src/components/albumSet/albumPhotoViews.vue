@@ -5,7 +5,6 @@ import { useRouter } from "vue-router";
 import { useDialog } from "primevue/usedialog";
 import { useAlbum } from "@/stores/album-store";
 import albumPhotoCreate from "@/components/albumSet/albumPhotoCreate.vue";
-import type iAlbumSet from "@/interfaces/album-set";
 import type iAlbumFile from "@/interfaces/album-photo";
 
 const router = useRouter();
@@ -23,7 +22,6 @@ const actions = () => {
     onInit: async () => {
         await myStore.getAlbumPhoto(albumValue.value, countryValue.value, cityValue.value, albumSetValue.value);
         cModel.value = myStore.albumFile;
-        console.log(cModel.value)
         setTimeout(() => {
           isReady.value = "READY";
         }, 1000);
