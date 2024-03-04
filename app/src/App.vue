@@ -3,7 +3,6 @@ import { RouterLink, RouterView } from 'vue-router'
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useAlbum } from "@/stores/album-store";
-import LoginVue from './components/Login.vue';
 import BreadCrumbs from "./components/settings/BreadCrumbs.vue";
 import type iBreadCrumb from "@/interfaces/bread-crumb";
 
