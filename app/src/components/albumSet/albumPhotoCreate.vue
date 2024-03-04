@@ -4,7 +4,6 @@ import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 import { useDialog } from "primevue/usedialog";
 import { useAlbum } from "@/stores/album-store";
-import UploadFilesComponent from "./UploadFilesComponent.vue";
 import type iAlbumFile from "@/interfaces/album-photo";
 
 const dialogRef = inject("dialogRef") as any;
@@ -98,7 +97,7 @@ const events = () => {
                         albumFileType: lastFile.type,
                         albumFileSize: lastFile.size,
                         albumFileUpload: event.files[event.files.length - i],
-                        albumFilePath : '',
+                        albumFilePath : "",  
                     }
                     cModel.value.push(fileSET);
                 }
