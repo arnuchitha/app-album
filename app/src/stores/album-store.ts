@@ -127,7 +127,6 @@ export const useAlbum = defineStore("useAlbum", {
         // }).catch((e) => {
         //   console.log(e);
         // });
-
         const data = {
           albumName: albumName,
           countryName: countryName,
@@ -139,7 +138,7 @@ export const useAlbum = defineStore("useAlbum", {
           .data(data)
           .finish()
           .then(() => {
-            axios.post(_BASE_URL + 'albumview/uploadAlbumSet', formData, {
+              axios.post(_BASE_URL + 'albumview/uploadAlbumSet', formData, {
               headers: { 'Access-Control-Allow-Origin': '*' }
             });
           });
