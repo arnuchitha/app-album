@@ -8,45 +8,6 @@ import albumPhotoCreate from "@/components/albumSet/albumPhotoCreate.vue";
 import type iAlbumSet from "@/interfaces/album-set";
 import type iAlbumFile from "@/interfaces/album-photo";
 
-interface Photo {
-  id: number;
-  url: string;
-}
-
-interface Album {
-  id: number;
-  name: string;
-  photos: Photo[];
-}
-
-const albums = ref<Album[]>([
-  {
-    id: 1,
-    name: 'Travel',
-    photos: [
-      { id: 1, url: "./src/assets/Images/Pictour/1.jpg" },
-      { id: 2, url: './src/assets/Images/Pictour/2.jpg' },
-      { id: 3, url: './src/assets/Images/Pictour/3.jpg' },
-      { id: 4, url: "./src/assets/Images/Pictour/1.jpg" },
-      { id: 5, url: './src/assets/Images/Pictour/2.jpg' },
-      { id: 6, url: './src/assets/Images/Pictour/3.jpg' },
-      { id: 7, url: './src/assets/Images/Pictour/3.jpg' },
-      { id: 8, url: "./src/assets/Images/Pictour/1.jpg" },
-      { id: 9, url: './src/assets/Images/Pictour/2.jpg' },
-      { id: 10, url: './src/assets/Images/Pictour/3.jpg' }
-    ]
-  },
-  {
-    id: 2,
-    name: 'Natural',
-    photos: [
-      { id: 4, url: './src/assets/Images/Pictour/4.jpg' },
-      { id: 5, url: './src/assets/Images/Pictour/5.jpg' },
-      { id: 6, url: './src/assets/Images/Pictour/1.jpg' }
-    ]
-  }
-]);
-
 const router = useRouter();
 const modalDialog = useDialog();
 const isReady = ref("WARN");
@@ -56,20 +17,16 @@ const albumValue = ref("");
 const albumSetValue = ref("");
 const countryValue = ref("");
 const cityValue = ref ("");
-const pathPhoto = ref("");
-const fileURL = import.meta.env.VITE_FILE_URL;
 
 const actions = () => {
   const ac = {
     onInit: async () => {
         await myStore.getAlbumPhoto(albumValue.value, countryValue.value, cityValue.value, albumSetValue.value);
         cModel.value = myStore.albumFile;
-        // await ac.getDataView();
+        console.log(cModel.value)
         setTimeout(() => {
           isReady.value = "READY";
         }, 1000);
-    },
-    getDataView: async () => {
     },
     onCreateAlbumSet: () =>{
       modalDialog.open( albumPhotoCreate, {
@@ -115,12 +72,6 @@ const actions = () => {
 
 const events =() => {
     const ev = {
-      setSearch: () => {
-        
-      },
-      clearSearch: () => {
-        
-      },
       back: (albumName: string, countryName: string, cityName: string) => {
         router.push({
           path: "/albumCountry/albumCity/album/albumSet",
@@ -170,13 +121,6 @@ onMounted(async () => {
             </div>
             </div>
         </div>
-        <!-- <img src="D:/StoreAlbum/thailand/กรุงเทพมหานคร/สถานที่ท่องเที่ยว/วัดพระแก้ว/1.jpg"> -->
-
-        <!-- <div v-for="item in cModel" :key="item.albumSetName">
-          <div class="card-album cursor-pointer mt-2" @click="123">
-            <p class="text-center mt-4">{{ item.albumSetName }}</p>
-          </div>
-        </div> -->
         </main>
     </div>
   </template>

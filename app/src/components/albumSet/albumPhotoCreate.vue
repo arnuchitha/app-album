@@ -7,8 +7,6 @@ import { useAlbum } from "@/stores/album-store";
 import type iAlbumFile from "@/interfaces/album-photo";
 
 const dialogRef = inject("dialogRef") as any;
-const confirm = useConfirm();
-const command = ref("");
 const toast = useToast();
 const isReady = ref("WARN");
 const albumName = ref("");
@@ -17,7 +15,6 @@ const countryName = ref("");
 const cityName = ref("");
 const myStore = useAlbum();
 const cModel = ref([] as iAlbumFile [])
-const uploadedFiles = ref({});
 const countFilesSelected = ref(0);
 const files = ref();
 
@@ -137,8 +134,6 @@ const onRemoveTemplatingFile = (file: any, removeFileCallback: Function, index: 
     cModel.value = cModel.value.filter(fm => fm.albumFileName != file.name);
     countFilesSelected.value = countFilesSelected.value - 1;
     removeFileCallback(index);
-    // totalSize.value -= parseInt(formatSize(file.size));
-    // totalSizePercent.value = totalSize.value / 10;
 }
 
 onMounted(async () => {
@@ -227,20 +222,6 @@ onMounted(async () => {
             <div class="box-title-sub"><h4><i class="fa-solid fa-circle-check title-icon"></i> ไฟล์แนบ</h4></div>
           </div>
           <div class="col-12 height-bottom">
-
-            <!-- <UploadFilesComponent v-model:model="cModel" /> -->
-            <!-- <FileUpload 
-                    name="demo[]"
-                    url="/api/upload"
-                    @upload="events().onAdvancedUpload($event)" 
-                    :multiple="true" 
-                    accept="image/*" 
-                    :maxFileSize="1000000"
-                    choose-label="เลือกรูป"
-                    cancel-label="ลบทั้งหมด"
-                    upload-label="อัปโหลด"
-                >
-            </FileUpload> -->
 
             <FileUpload name="demo[]" url="/api/upload" :multiple="true" @select="events().onSelectedFiles">
               <template #header="{ chooseCallback, clearCallback, files }">

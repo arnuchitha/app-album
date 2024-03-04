@@ -61,15 +61,6 @@ const events = () => {
   return ev;
 };
 
-
-// const disabled = ref(true);
-// setTimeout(() => {
-//   if (command.value == "edit" || command.value == "create") {
-//     disabled.value = false;
-//   }
-//   return disabled.value;
-// }, 5000);
-
 onMounted(async () => {
   await actions()
     .onInit()

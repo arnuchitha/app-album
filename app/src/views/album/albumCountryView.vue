@@ -11,55 +11,15 @@ import type iAlbumProject from "@/interfaces/album-project";
 import type iCountryList from "@/interfaces/country-list";
 import type iCityList from "@/interfaces/cityList"
 
-interface Photo {
-  id: number;
-  url: string;
-}
-
 interface setSearch {
   countryName: string;
 }
-
-interface setSearchShow {
-  CO: string;
-}
-
-interface Album {
-  id: number;
-  name: string;
-  photos: Photo[];
-}
-
-const albums = ref<Album[]>([
-  {
-    id: 1,
-    name: 'Travel',
-    photos: [
-      { id: 1, url: './src/assets/Images/Pictour/1.jpg' },
-      { id: 2, url: './src/assets/Images/Pictour/2.jpg' },
-      { id: 3, url: './src/assets/Images/Pictour/3.jpg' }
-    ]
-  },
-  {
-    id: 2,
-    name: 'Natural',
-    photos: [
-      { id: 4, url: './src/assets/Images/Pictour/4.jpg' },
-      { id: 5, url: './src/assets/Images/Pictour/5.jpg' },
-      { id: 6, url: './src/assets/Images/Pictour/1.jpg' }
-    ]
-  }
-]);
 
 const router = useRouter();
 const modalDialog = useDialog();
 const isReady = ref("WARN");
 const myStore = useAlbum();
 const cModel = ref([] as iCountryList []);
-const cModelShow = ref([] as iCountryList []);
-const countryValue = ref("");
-const cityValue = ref ("");
-const keySearch = ref("");
 const countryList = ref(myStore.countryList);
 
 const modelSearch: setSearch = reactive({
@@ -178,14 +138,6 @@ onMounted(async () => {
       </div>
     </div>
       <main>
-      <!-- <div>
-          <div v-for="album in albums" :key="album.id">
-          <h2>{{ album.name }}</h2>
-          <div class="album-photos">
-              <img v-for="photo in album.photos" :key="photo.id" :src="photo.url" alt="Photo">
-          </div>
-          </div>
-      </div> -->
       
       <div v-for="item in cModel" :key="item.countryName">
         <div class="card-album cursor-pointer mt-2" @click="events().onViewCity(item.countryName)">

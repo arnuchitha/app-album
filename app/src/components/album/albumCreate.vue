@@ -6,7 +6,6 @@ import { useDialog } from "primevue/usedialog";
 import { useAlbum } from "@/stores/album-store";
 
 const dialogRef = inject("dialogRef") as any;
-const confirm = useConfirm();
 const toast = useToast();
 const isReady = ref("WARN");
 const albumName = ref("");
@@ -70,15 +69,6 @@ const events = () => {
   };
   return ev;
 };
-
-
-// const disabled = ref(true);
-// setTimeout(() => {
-//   if (command.value == "edit" || command.value == "create") {
-//     disabled.value = false;
-//   }
-//   return disabled.value;
-// }, 5000);
 
 onMounted(async () => {
   await actions()

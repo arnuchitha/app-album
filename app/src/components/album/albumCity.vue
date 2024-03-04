@@ -4,13 +4,10 @@ import { useConfirm } from "primevue/useconfirm";
 import { useToast } from "primevue/usetoast";
 import { useDialog } from "primevue/usedialog";
 import { useAlbum } from "@/stores/album-store";
-import type iCountryList from "@/interfaces/country-list";
 
 const dialogRef = inject("dialogRef") as any;
-const confirm = useConfirm();
 const toast = useToast();
 const isReady = ref("WARN");
-const albumName = ref("");
 const countryName = ref("");
 const countryValue = ref("");
 const cityName = ref("");
@@ -72,8 +69,6 @@ const events = () => {
 
 watch(countryName, async () => {
   countryValue.value = countryName.value;
-    // await actions().getDataView();
-    // events().showData();
 });
 
 onMounted(async () => {
@@ -131,38 +126,6 @@ onMounted(async () => {
                 </div>
               </div>
             </div>
-            <!-- <div class="inputClean">
-                <div class="input input-pi">
-                  <Dropdown
-                    v-model="countryName"
-                    optionLabel="countryName"
-                    optionValue="countryName"
-                    :options="cModel"
-                    placeholder="เลือกประเทศ"
-                    :filter="true"
-                    class="p-dropdown-country"
-                  >
-                    <template #value="cModel">
-                      <div v-if="cModel.value">
-                        <div>{{ cModel.value }}</div>
-                      </div>
-                      <span v-else>
-                        {{ cModel.placeholder }}
-                      </span>
-                    </template>
-                    <template #option="cModel">
-                      <div class="template-country">
-                        <div class="template-country-content">
-                          {{ cModel.option.countryName }}
-                        </div>
-                      </div>
-                    </template>
-                  </Dropdown>
-                  <div class="labelInput">
-                    <label><i class="pi pi-globe"></i> ประเทศ </label>
-                  </div>
-                </div>
-            </div> -->
           </div>
         </div>
       </div>

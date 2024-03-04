@@ -20,13 +20,10 @@ router.afterEach((r) => {
 const events = () => {
   const ev = {
     routerToBreadCrumb: async (p: string) => {
-      let albumValue = String(router.currentRoute.value.query.albumName);
-      let countryValue = String(router.currentRoute.value.query.countryName);
-      let cityValue = String(router.currentRoute.value.query.cityName);
-      let albumSetValue = String(router.currentRoute.value.query.albumSetName);
-      
-      // const dataTest = [{valueP :countryValue}, {valueP : cityValue}, { valueP : albumValue}, {valueP : albumSetValue}];
-      // const dataOptions1 = [...router.options.routes, ...dataTest];
+      // let albumValue = String(router.currentRoute.value.query.albumName);
+      // let countryValue = String(router.currentRoute.value.query.countryName);
+      // let cityValue = String(router.currentRoute.value.query.cityName);
+      // let albumSetValue = String(router.currentRoute.value.query.albumSetName);
 
       const dataOptions = [...router.options.routes];
       const optionsToBreadCrumb: iBreadCrumb[] = dataOptions.map((o) => {

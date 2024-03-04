@@ -4,53 +4,15 @@ import { computed, onMounted, reactive, ref, inject, h, watch, toRaw } from "vue
 import { useRouter } from "vue-router";
 import { useDialog } from "primevue/usedialog";
 import { useAlbum } from "@/stores/album-store";
-import albumCreate from "@/components/album/albumCreate.vue";
-import albumCreateCountry from "@/components/album/albumCountry.vue"
 import albumCreateCity from "@/components/album/albumCity.vue"
-import type iAlbumProject from "@/interfaces/album-project";
-import type iCountryList from "@/interfaces/country-list";
 import type iCityList from "@/interfaces/cityList"
 
-interface Photo {
-  id: number;
-  url: string;
-}
 
 interface setSearch {
   countryName: string;
   cityName: string;
 }
 
-interface setSearchShow {
-  cityName: string;
-}
-
-interface Album {
-  id: number;
-  name: string;
-  photos: Photo[];
-}
-
-const albums = ref<Album[]>([
-  {
-    id: 1,
-    name: 'Travel',
-    photos: [
-      { id: 1, url: './src/assets/Images/Pictour/1.jpg' },
-      { id: 2, url: './src/assets/Images/Pictour/2.jpg' },
-      { id: 3, url: './src/assets/Images/Pictour/3.jpg' }
-    ]
-  },
-  {
-    id: 2,
-    name: 'Natural',
-    photos: [
-      { id: 4, url: './src/assets/Images/Pictour/4.jpg' },
-      { id: 5, url: './src/assets/Images/Pictour/5.jpg' },
-      { id: 6, url: './src/assets/Images/Pictour/1.jpg' }
-    ]
-  }
-]);
 
 const router = useRouter();
 const modalDialog = useDialog();
@@ -58,7 +20,6 @@ const isReady = ref("WARN");
 const myStore = useAlbum();
 const cModel = ref([] as iCityList []);
 const countryValue = ref("");
-const cityValue = ref ("");
 const cityList = ref(myStore.cityList);
 
 const modelSearch: setSearch = reactive({
@@ -198,14 +159,6 @@ onMounted(async () => {
       </div>
     </div>
       <main>
-      <!-- <div>
-          <div v-for="album in albums" :key="album.id">
-          <h2>{{ album.name }}</h2>
-          <div class="album-photos">
-              <img v-for="photo in album.photos" :key="photo.id" :src="photo.url" alt="Photo">
-          </div>
-          </div>
-      </div> -->
 
       <div v-for="item in cModel" :key="item.cityName">
         <div class="card-album cursor-pointer mt-2" @click="events().onViewAlbum(countryValue, item.cityName)">
