@@ -222,8 +222,8 @@ onMounted(async () => {
             <div class="box-title-sub"><h4><i class="fa-solid fa-circle-check title-icon"></i> ไฟล์แนบ</h4></div>
           </div>
           <div class="col-12 height-bottom">
-
-            <FileUpload name="demo[]" url="/api/upload" :multiple="true" @select="events().onSelectedFiles">
+            <Toast />
+            <FileUpload name="demo[]" url="/api/upload" :multiple="true" @select="events().onSelectedFiles" accept=".jpg,.jpeg,.png,.gif">
               <template #header="{ chooseCallback, clearCallback, files }">
                   <div class="row mt-0 mb-4">
                       <div class="col"></div>

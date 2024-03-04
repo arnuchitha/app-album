@@ -89,7 +89,7 @@ const events =() => {
       onViewAlbumPhoto: (albumName: string, countryName: string, cityName: string, albumSetName: string) => {
         router.push({
           path: "/albumCountry/albumCity/album/albumSet/albumPhoto",
-          query: { albumName: albumName, countryName: countryName, cityName: cityName, albumSetName: albumSetName },
+          query: { countryName: countryName, cityName: cityName, albumName: albumName, albumSetName: albumSetName },
         });
       },
       back: (countryName: string, cityName: string) => {

@@ -3,12 +3,14 @@ import { RouterLink, RouterView } from 'vue-router'
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useAlbum } from "@/stores/album-store";
+import { useToast } from "primevue/usetoast";
 import BreadCrumbs from "./components/settings/BreadCrumbs.vue";
 import type iBreadCrumb from "@/interfaces/bread-crumb";
 
 const router = useRouter();
 const isActiveMain = ref(false);
 const myStore = useAlbum();
+const toast = useToast();
 
 router.afterEach((r) => {
   isActiveMain.value = r.path == "/" ? true : false;
@@ -34,6 +36,7 @@ const events = () => {
         const isName = keyAndName?.find((v, i) => {
           return i == 1;
         });
+
         const dataRouterToBreadCrumbs: iBreadCrumb = {
           key: isKey,
           name: isName ? isName : isKey,
@@ -42,12 +45,18 @@ const events = () => {
         return dataRouterToBreadCrumbs;
       });
       const originBreadCrumbs = p;
-
       const arrBreadCrumbs: string[] = originBreadCrumbs
         .split("/")
         .filter((o) => {
           return o !== "";
         });
+
+      // const myObject = router.currentRoute.value.query;
+      // const myArray = Object.values(myObject);
+      // myArray.filter((o)=> {
+      //   return o !== "";
+      // });
+
       await myStore.fetchBreadCrumbIni(arrBreadCrumbs, optionsToBreadCrumb);
     },
   }
@@ -60,6 +69,7 @@ const events = () => {
   <div id="app">
     <div class="layout">
       <div class="row">
+      <Toast />
         <div class="col-auto bread-padding">
           <BreadCrumbs />
         </div>

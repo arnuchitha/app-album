@@ -7,13 +7,14 @@ const albumValue = ref("");
 const countryValue = ref("");
 const cityValue = ref("");
 const albumSetValue = ref("");
+
 const goRoute = async (p: any) => {
   if (p) {
     albumValue.value = String(!router.currentRoute.value.query.albumName ? "": router.currentRoute.value.query.albumName);
     countryValue.value = String(!router.currentRoute.value.query.countryName? "": router.currentRoute.value.query.countryName);
     cityValue.value = String(!router.currentRoute.value.query.cityName? "": router.currentRoute.value.query.cityName);
     albumSetValue.value = String(!router.currentRoute.value.query.albumSetName? "": router.currentRoute.value.query.albumSetName);
-    
+
     await router
    .push({ 
       path :p, 
@@ -21,6 +22,10 @@ const goRoute = async (p: any) => {
   });
   }
 };
+
+onMounted(async () => {
+
+});
 </script>
 // eslint-disable-next-line vue/multi-word-component-names
 <template>
